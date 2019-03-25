@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+        <link href='../static/css/style.css' rel="stylesheet">
+        <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    </head>
+    <body style="font-family:Montserrat;color:#aaaaaa;">
+        <div class="header">
+            <a href="/" class="logo">Crowdsourcing Analytics and Visualization</a>
+        </div>
+        <hr class="style1">
+        <div class="main">
+            <div class="main-content">
+                <div>
+                    <h1>Statistics</h1>
+                </div>
+                <hr>
+                <div class="stat-content">
+                        <div id="pieChart"></div>
+                        <div id="barChart"></div>
+                </div>
+                <br>
+                <!-- <div class="stat-content">
+                        <div id="most-commom-words"></div>
+                        <div id="barChart"></div>
+                </div> -->
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/">Dashboard</a><br>
+                <a href="{{ url_for('maps') }}">Maps</a><br>
+                <a href="{{ url_for('insights') }}">Insights</a><br>
+                <a href="{{ url_for('statistics') }}">Statistics</a><br>
+                <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
+            </nav>     
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/queue.v1.min.js"></script>
+        <script>
+            var piechartDataUrl = "{{ url_for('get_piechart_data') }}";
+            var barchartDataUrl = "{{ url_for('get_barchart_data') }}";
+        </script>
+        <script src="{{ url_for('static', filename='js/pieChart.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/barChart.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/updateChart.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    </body>
+</html>

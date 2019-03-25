@@ -1,0 +1,51 @@
+states,mortality,successful,fail,category
+Alabama,8.6,24,3,Music
+Alaska,4.2,21,95,Technology
+Arizona,5.9,62,42,Arts
+Arkansas,7.2,74,11,Film & video
+California,4.7,37,50,Publishing
+Colorado,5.3,67,53,Food
+Connecticut,5.2,6,74,Games
+Delaware,8,44,94,Fashion
+Florida,6.4,35,7,Design
+Georgia,6.5,32,26,Comics
+Hawaii,5.4,82,57,Photography
+Idaho,5.1,73,37,Theater
+Illinois,6.6,50,71,Crafts
+Indiana,7.3,21,27,Journalism
+Iowa,5,7,45,Dance
+Kansas,6.2,29,30,Music
+Kentucky,6.8,9,29,Technology
+Louisiana,8,11,66,Arts
+Maine,6.3,79,87,Film & video
+Maryland,6.7,60,78,Publishing
+Massachusetts,4.3,16,87,Food
+Michigan,6.9,73,14,Games
+Minnesota,4.8,12,51,Fashion
+Mississippi,9.3,23,13,Design
+Missouri,6.5,36,9,Comics
+Montana,6,90,27,Photography
+Nebraska,5.2,72,43,Theater
+Nevada,5.4,39,52,Crafts
+New Hampshire,4.2,33,81,Journalism
+New Jersey,4.8,71,42,Dance
+New Mexico,6,94,99,Music
+New York,5.1,71,69,Technology
+North Carolina,7.2,49,32,Arts
+North Dakota,6.5,84,97,Film & video
+Ohio, 7.7,76,88,Publishing
+Oklahoma,7.4,95,75,Food
+Oregon,5,95,5,Games
+Pennsylvania,6.9,12,28,Fashion
+Rhode Island,6.7,90,30,Design
+South Carolina,7.4,10,82,Comics
+South Dakota,7.2,95,84,Photography
+Tennessee,7.5,74,9,Theater
+Texas,5.9,42,28,Crafts
+Utah,5.1,38,41,Journalism
+Vermont,4.5,44,14,Dance
+Virginia,6.7,94,2,Photography
+Washington,4.8,4,77,Theater
+West Virginia,7,52,93,Crafts
+Wisconsin,5.9,30,5,Journalism
+Wyoming,6.4,63,74,Dance

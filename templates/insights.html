@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+        <link href='../static/css/style.css' rel="stylesheet">
+        <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    </head>
+    <body style="font-family:Montserrat;color:#aaaaaa;">
+        <script src="https://d3js.org/d3.v4.min.js"></script> 
+        <script src="../static/js/continent_category.js"></script>
+
+        <div class="header">
+            <a href="/" class="logo">Crowdsourcing Analytics and Visualization</a>
+        </div>
+        <hr class="style1">
+        <div class="main">
+            <div class="main-content">
+                <div>
+                    <h1>Insights</h1>
+                </div>
+                <hr>
+                <div class="insights-content">
+                    <div id="form-content">
+                        <form action = "{{ url_for('insights') }}" method = "POST">
+                            <p>Project Name <input type = "text" name = "name" /></p>
+                            <p>Project Description <input type = "text" name = "desc" /></p>
+                            <p>Goal Amount <input type = "text" name = "goal" /></p>
+                            <p>Campaign Length <input type ="text" name = "campaign_length" /></p>
+                            <p>Country <input type ="text" name = "country" /></p>
+                            <p>Parent Category <input type ="text" name = "parent_category" /></p>
+                            <p>Category <input type ="text" name = "category" /></p>
+                            <p><input type = "submit" value = "submit"/></p>
+                        </form>
+                    </div>
+                    <div id="result-content">
+                        <!-- {% if data1 == 0 %}
+                        <p>{{ data1 }}</p>
+                        {% elif data1 != 9 %}
+                        <p>{{ data1 }}</p>
+                        {% endif %}                         -->
+                        <br>
+                        <div id="myProgress">
+                            <div id="myBar">0%</div>
+                        </div>
+                        <button onclick="var t = {{ data1 }}; move(t)">Show Prediction</button> 
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/">Dashboard</a><br>
+                <a href="{{ url_for('maps') }}">Maps</a><br>
+                <a href="{{ url_for('insights') }}">Insights</a><br>
+                <a href="{{ url_for('statistics') }}">Statistics</a><br>
+                <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
+            </nav>     
+        </div>
+        <script>
+            function move(max_val) {
+                var elem = document.getElementById("myBar"); 
+                var width = 0;
+                var id = setInterval(frame, 10);
+                function frame() {
+                    if (width >= max_val) {
+                    clearInterval(id);
+                    } else {
+                    width++; 
+                    elem.style.width = width + '%'; 
+                    elem.innerHTML = width * 1 + '%';
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

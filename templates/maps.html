@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+        <link href='../static/css/style.css' rel="stylesheet">
+        <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    </head>
+    <body style="font-family:Montserrat;color:#aaaaaa;">
+        <div class="header">
+            <a href="/" class="logo">Crowdsourcing Analytics and Visualization</a>
+        </div>
+        <hr class="style1">
+        <div class="main">
+            <div class="main-content">
+                <div>
+                    <h1>Maps</h1>
+                </div>
+                <hr>
+                <div class="us-map-content">
+                    <div id="us-vis"></div>
+                    <div id="us-info">
+                        <div class="us-wrapper">
+                            <div class="us-one">Projects</div>
+                            <div class="us-two">Successful</div>
+                            <div class="us-three">Failed</div>
+                            <div class="us-four">Most Popular Category</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/">Dashboard</a><br>
+                <a href="{{ url_for('maps') }}">Maps</a><br>
+                <a href="{{ url_for('insights') }}">Insights</a><br>
+                <a href="{{ url_for('statistics') }}">Statistics</a><br>
+                <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
+            </nav>      
+        </div>
+
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://d3js.org/queue.v1.min.js"></script>
+        <script src="{{ url_for('static', filename='js/d3-legend.min.js') }}"></script>
+        <script src="http://d3js.org/topojson.v1.min.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <script>
+            var width = 600, height = 400, centered;
+            var tip2 = d3.tip()
+            .attr('class', 'd3-tip-us')
+            .offset([-5, 0])
+            .html(function(d) {
+                var dataRow = countryById.get(d.properties.name);
+                if (dataRow) {
+                    // console.log(dataRow);
+                    return dataRow.states + ": " + dataRow.mortality;
+                } else {
+                    // console.log("no dataRow", d);
+                    return d.properties.name + ": No data.";
+                }
+            })
+
+
+            var svg5 = d3.select('#us-vis').append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            svg5.call(tip2);
+
+            var projection2 = d3.geo.albersUsa()
+                .scale(500) // mess with this if you want
+                .translate([width / 2, height / 2]);
+
+            var path = d3.geo.path()
+                .projection(projection2);
+
+            var colorScale = d3.scale.linear().range(["#D4EEFF", "#0099FF"]).interpolate(d3.interpolateLab);
+
+            var countryById = d3.map();
+
+            // we use queue because we have 2 data files to load.
+            queue()
+                .defer(d3.json, "{{ url_for('static', filename='data/USA.json') }}")
+                .defer(d3.csv, "{{ url_for('static', filename='data/mortality.csv') }}", typeAndSet) // process
+                .await(loaded);
+
+            function typeAndSet(d) {
+                d.mortality = +d.mortality;
+                d.successful = +d.successful;
+                d.fail = +d.fail;
+                // d.category = +d.category;
+                // console.log(d.successful);
+                countryById.set(d.states, d);
+                return d;
+            }
+
+            function getColor(d) {
+                var dataRow = countryById.get(d.properties.name);
+                if (dataRow) {
+                    // console.log(dataRow);
+                    return colorScale(dataRow.mortality);
+                } else {
+                    // console.log("no dataRow", d);
+                    return "#ccc";
+                }
+            }
+
+
+            function loaded(error, usa, mortality) {
+
+                console.log(usa);
+                // console.log(mortality);
+
+                colorScale.domain(d3.extent(mortality, function(d) {return d.mortality;}));
+
+                var states = topojson.feature(usa, usa.objects.units).features;
+                // console.log(states);
+                svg5.selectAll('path.states')
+                    .data(states)
+                    .enter()
+                    .append('path')
+                    .attr('class', 'states')
+                    .attr('d', path)
+                    .on('mouseover', tip2.show)
+                    .on('mouseout', tip2.hide)
+                    .on('click', clicked)
+                    .attr('fill', function(d,i) {
+                        // console.log(i);
+                        // console.log(d.properties.name);
+                        return getColor(d);
+                    })
+                    .append("title");
+
+                var linear = colorScale;
+
+                svg5.append("g")
+                .attr("class", "legendLinear")
+                .attr("transform", "translate(20,20)");
+
+                var legendLinear = d3.legend.color()
+                .shapeWidth(30)
+                .orient('horizontal')
+                .scale(linear);
+
+                svg5.select(".legendLinear")
+                .call(legendLinear);
+            }
+
+            function clicked(d){
+                // var temp = document.querySelector("#info > svg5");
+                var temp = document.querySelector(".us-one > p");
+                if (temp !== null){
+                    document.querySelector(".us-one").removeChild(temp);
+                    document.querySelector(".us-two").removeChild(document.querySelector(".us-two > p"));
+                    document.querySelector(".us-three").removeChild(document.querySelector(".us-three > p"));
+                    document.querySelector(".us-four").removeChild(document.querySelector(".us-four > p"));
+                }
+                var dataRow = countryById.get(d.properties.name);
+                // console.log(dataRow);
+
+                d3.select(".us-one").append("p").text(dataRow.mortality);
+                d3.select(".us-two").append("p").text(dataRow.successful);
+                d3.select(".us-three").append("p").text(dataRow.fail);
+                d3.select(".us-four").append("p").text(dataRow.category);
+            }
+        </script>
+
+    </body>
+</html>

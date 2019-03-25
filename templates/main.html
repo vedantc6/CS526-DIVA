@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+        <link href='../static/css/style.css' rel="stylesheet">
+        <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    </head>
+    <body style="font-family:Montserrat;color:#aaaaaa;">
+        <div class="header">
+            <a href="/" class="logo">Crowdsourcing Analytics and Visualization</a>
+        </div>
+        <hr class="style1">
+        <div class="main">
+            <div class="main-content">
+                <div>
+                    <h1>Dashboard</h1>
+                </div>
+                <hr>
+                <div class="graph-content">
+                    <div id="line-chart">
+                        <div>Line Chart <span style="float: right"><a id="year" href="/">Year</a><a id="month" href="/"> Month</a></span></div>
+                        <br>
+                        <svg id="line-chart-svg" width="550" height="300"></svg>
+                    </div>
+                    <div id="successful-words">
+                        <div>Successful words</div>
+                        <br>
+                    </div>
+                    <div id="world-map">
+                        <div>World Map</div>
+                        <svg id="world-map-svg" width="550" height="300"></svg>
+                    </div>
+                    <div id="continent-categories">
+                        <div>Continent wise categories</div>
+                        <br>
+                        <div class="wrapper">
+                            <div class="box a" onclick="bar(data1);">North America</div>
+                            <div class="box b" onclick="bar(data2);">South America</div>
+                            <div class="box c">Europe</div>
+                            <div class="box d">Asia</div>
+                            <div class="box e">Africa</div>
+                            <div class="box f">Oceania</div>
+                        </div>
+                        <svg id="barchart" width="550" height="300"></svg>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="/">Dashboard</a><br>
+                <a href="{{ url_for('maps') }}">Maps</a><br>
+                <a href="{{ url_for('insights') }}">Insights</a><br>
+                <a href="{{ url_for('statistics') }}">Statistics</a><br>
+                <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
+            </nav>    
+        </div>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script> 
+        <script src="http://d3js.org/queue.v1.min.js"></script>
+        <script src="http://d3js.org/topojson.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+        <script src="{{ url_for('static', filename='js/d3-tip.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jenks.js') }}"></script>
+        <script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+        <script>
+            zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+            ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];
+        </script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
+        <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+        <script src="{{ url_for('static', filename='js/line_chart.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/wordcloud.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.js"></script>
+        <script lang='babel' type='text/babel' src="{{ url_for('static', filename='js/world_map.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/continent_category.js') }}"></script>
+
+    </body>
+</html>
