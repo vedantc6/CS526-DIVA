@@ -25,14 +25,12 @@ Belize,BZ,BLZ
 Benin,BJ,BEN
 Bermuda,BM,BMU
 Bhutan,BT,BTN
-Bolivia (Plurinational State of),BO,BOL
-"Bonaire, Sint Eustatius and Saba",BQ,BES
+Bolivia,BO,BOL
 Bosnia and Herzegovina,BA,BIH
 Botswana,BW,BWA
 Bouvet Island,BV,BVT
 Brazil,BR,BRA
-British Indian Ocean Territory,IO,IOT
-Brunei Darussalam,BN,BRN
+Brunei,BN,BRN
 Bulgaria,BG,BGR
 Burkina Faso,BF,BFA
 Burundi,BI,BDI
@@ -49,14 +47,13 @@ Christmas Island,CX,CXR
 Cocos (Keeling) Islands,CC,CCK
 Colombia,CO,COL
 Comoros,KM,COM
-Congo,CG,COG
+"Congo, Republic of the",CG,COG
 "Congo, Democratic Republic of the",CD,COD
 Cook Islands,CK,COK
 Costa Rica,CR,CRI
-Côte d'Ivoire,CI,CIV
+Cote d'Ivoire,CI,CIV
 Croatia,HR,HRV
 Cuba,CU,CUB
-Curaçao,CW,CUW
 Cyprus,CY,CYP
 Czechia,CZ,CZE
 Denmark,DK,DNK
@@ -71,14 +68,14 @@ Eritrea,ER,ERI
 Estonia,EE,EST
 Eswatini,SZ,SWZ
 Ethiopia,ET,ETH
-Falkland Islands (Malvinas),FK,FLK
+Falkland Islands (Islas Malvinas),FK,FLK
 Faroe Islands,FO,FRO
 Fiji,FJ,FJI
 Finland,FI,FIN
 France,FR,FRA
 French Guiana,GF,GUF
 French Polynesia,PF,PYF
-French Southern Territories,TF,ATF
+French Southern and Antarctic Lands,TF,ATF
 Gabon,GA,GAB
 Gambia,GM,GMB
 Georgia,GE,GEO
@@ -96,7 +93,6 @@ Guinea,GN,GIN
 Guinea-Bissau,GW,GNB
 Guyana,GY,GUY
 Haiti,HT,HTI
-Heard Island and McDonald Islands,HM,HMD
 Holy See,VA,VAT
 Honduras,HN,HND
 Hong Kong,HK,HKG
@@ -104,7 +100,7 @@ Hungary,HU,HUN
 Iceland,IS,ISL
 India,IN,IND
 Indonesia,ID,IDN
-Iran (Islamic Republic of),IR,IRN
+Iran,IR,IRN
 Iraq,IQ,IRQ
 Ireland,IE,IRL
 Isle of Man,IM,IMN
@@ -117,11 +113,11 @@ Jordan,JO,JOR
 Kazakhstan,KZ,KAZ
 Kenya,KE,KEN
 Kiribati,KI,KIR
-Korea (Democratic People's Republic of),KP,PRK
-"Korea, Republic of",KR,KOR
+"Korea, North",KP,PRK
+"Korea, South",KR,KOR
 Kuwait,KW,KWT
 Kyrgyzstan,KG,KGZ
-Lao People's Democratic Republic,LA,LAO
+Laos,LA,LAO
 Latvia,LV,LVA
 Lebanon,LB,LBN
 Lesotho,LS,LSO
@@ -144,7 +140,7 @@ Mauritius,MU,MUS
 Mayotte,YT,MYT
 Mexico,MX,MEX
 Micronesia (Federated States of),FM,FSM
-"Moldova, Republic of",MD,MDA
+Moldova,MD,MDA
 Monaco,MC,MCO
 Mongolia,MN,MNG
 Montenegro,ME,MNE
@@ -169,7 +165,6 @@ Norway,NO,NOR
 Oman,OM,OMN
 Pakistan,PK,PAK
 Palau,PW,PLW
-"Palestine, State of",PS,PSE
 Panama,PA,PAN
 Papua New Guinea,PG,PNG
 Paraguay,PY,PRY
@@ -180,15 +175,14 @@ Poland,PL,POL
 Portugal,PT,PRT
 Puerto Rico,PR,PRI
 Qatar,QA,QAT
-Réunion,RE,REU
 Romania,RO,ROU
-Russian Federation,RU,RUS
+Russia,RU,RUS
 Rwanda,RW,RWA
-Saint Barthélemy,BL,BLM
+Saint Barthelemy,BL,BLM
 "Saint Helena, Ascension and Tristan da Cunha",SH,SHN
 Saint Kitts and Nevis,KN,KNA
 Saint Lucia,LC,LCA
-Saint Martin (French part),MF,MAF
+Saint Martin,MF,MAF
 Saint Pierre and Miquelon,PM,SPM
 Saint Vincent and the Grenadines,VC,VCT
 Samoa,WS,WSM
@@ -200,7 +194,6 @@ Serbia,RS,SRB
 Seychelles,SC,SYC
 Sierra Leone,SL,SLE
 Singapore,SG,SGP
-Sint Maarten (Dutch part),SX,SXM
 Slovakia,SK,SVK
 Slovenia,SI,SVN
 Solomon Islands,SB,SLB
@@ -216,9 +209,9 @@ Svalbard and Jan Mayen,SJ,SJM
 Sweden,SE,SWE
 Switzerland,CH,CHE
 Syrian Arab Republic,SY,SYR
-"Taiwan, Province of China",TW,TWN
+Taiwan,TW,TWN
 Tajikistan,TJ,TJK
-"Tanzania, United Republic of",TZ,TZA
+Tanzania,TZ,TZA
 Thailand,TH,THA
 Timor-Leste,TL,TLS
 Togo,TG,TGO
@@ -233,16 +226,15 @@ Tuvalu,TV,TUV
 Uganda,UG,UGA
 Ukraine,UA,UKR
 United Arab Emirates,AE,ARE
-United Kingdom of Great Britain and Northern Ireland,GB,GBR
+United Kingdom,GB,GBR
 United States of America,US,USA
-United States Minor Outlying Islands,UM,UMI
 Uruguay,UY,URY
 Uzbekistan,UZ,UZB
 Vanuatu,VU,VUT
-Venezuela (Bolivarian Republic of),VE,VEN
-Viet Nam,VN,VNM
-Virgin Islands (British),VG,VGB
-Virgin Islands (U.S.),VI,VIR
+Venezuela,VE,VEN
+Vietnam,VN,VNM
+British Virgin Islands,VG,VGB
+Virgin Islands,VI,VIR
 Wallis and Futuna,WF,WLF
 Western Sahara,EH,ESH
 Yemen,YE,YEM

@@ -9,10 +9,14 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 data2 = pd.read_csv("static/data/KickStarter2018.csv")
+stopwords = ["video,dance,journalism,crafts,theater,photography,comics,design,fashion,games,food,publishing,art,technology,film,music,category,kickstart,kickstarter,pledge,goal,now,should,don't,just,will,can,very,too,than,so,same,own,only,not,nor,no,such,some,other,most,more,few,each,both,any,all,how,why,where,when,there,here,once,then,further,again,under,over,off,on,out,in,down,up,from,to,below,above,after,before,during,through,into,between,against,about,with,for,by,at,of,while,until,as,because,or,if,but,and,the,an,a,doing,did,does,do,having,had,has,have,being,been,be,were,was,are,is,am,those,these,that,this,whom,who,which,what,themselves,theirs,their,them,they,itself,its,it,herself,hers,her,she,himself,his,him,he,yourselves,yourself,yours,your,you,ourselves,ours,our,we,myself,my,me,i"]
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-   return render_template('main.html')
+    temp = data2[data2.state == 'successful'].blurb
+    text = " ".join(temp.iloc[i] for i in range(len(temp)))
+
+    return render_template('main.html', successful_text=[text, stopwords])
 
 @app.route('/maps')
 def maps():
@@ -100,6 +104,13 @@ def usa_data():
 
     return jsonify(usa)
 
+# @app.route('/usa_json')
+# def usa_json():
+#     with open('static/data/USA.json') as json_file:  
+#         data = json.load(json_file)
+        
+#     return jsonify(data)
+
 @app.route('/get_piechart_data')
 def get_piechart_data():
     category_perc = round(data2["cat_parent"].value_counts()/len(data2["cat_parent"])*100,2)
@@ -137,13 +148,6 @@ def get_barchart_data():
             barChartData.append(each_data)
 
     return jsonify(barChartData)
-# @app.route('/usa_json')
-# def usa_json():
-#     with open('static/data/USA.json') as json_file:  
-#         data = json.load(json_file)
-        
-#     return jsonify(data)
-
 
 @app.route('/line_chart_data')
 def line_chart_data():
@@ -216,6 +220,25 @@ def get_spotlight_data():
             spotlight_data.append(each_data)
 
     return jsonify(spotlight_data)
+
+@app.route("/continent_category_data")
+def continent_category_data():
+    continent_list = data2["continent"].unique()
+    continent_data = []
+    
+    for continent in continent_list:
+        temp_data = data2[data2.continent == continent]
+        category_perc = temp_data["cat_parent"].value_counts()
+        
+        for index, item in zip(category_perc.index, category_perc.values):
+            each_data = {}
+            each_data['continent'] = str(continent)
+            each_data['area'] = str(index)
+            each_data['value'] = int(item)
+
+            continent_data.append(each_data)
+            
+    return jsonify(continent_data)
 
 if __name__ == '__main__':
    app.run(debug = True)

@@ -6,8 +6,10 @@ const format = d3.format(',');
 var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
-  .html(d => `<strong>Country: </strong><span class='details'>${d.properties.country}<br></span><strong>Projects: </strong><span class='details'>${format(d[colorVariable])}</span>`);
-
+  .html(function(d){
+    return "<strong>Country:</strong> <span style='color:red'>" + d.properties.name + "</span> <br> <strong>Projects: </strong> <span style='color:red'>" + format(d[colorVariable]) + "</span>";
+  })
+  
 var margin = {top: 0, right: 0, bottom: 0, left: 0};
 var width = 660 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;

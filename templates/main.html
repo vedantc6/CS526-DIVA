@@ -7,6 +7,7 @@
         <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
         <link href='../static/css/style.css' rel="stylesheet">
         <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     </head>
     <body style="font-family:Montserrat;color:#aaaaaa;">
         <div class="header">
@@ -37,12 +38,12 @@
                         <div>Continent wise categories</div>
                         <br>
                         <div class="wrapper">
-                            <div class="box a" onclick="bar(data1);">North America</div>
-                            <div class="box b" onclick="bar(data2);">South America</div>
-                            <div class="box c">Europe</div>
-                            <div class="box d">Asia</div>
-                            <div class="box e">Africa</div>
-                            <div class="box f">Oceania</div>
+                            <div class="box a" onclick="bar('North America');">North America</div>
+                            <div class="box b" onclick="bar('South America');">South America</div>
+                            <div class="box c" onclick="bar('Europe');">Europe</div>
+                            <div class="box d" onclick="bar('Asia');">Asia</div>
+                            <div class="box e" onclick="bar('Africa');">Africa</div>
+                            <div class="box f" onclick="bar('Oceania');">Oceania</div>
                         </div>
                         <svg id="barchart" width="550" height="300"></svg>
                     </div>
@@ -58,6 +59,10 @@
             </nav>    
         </div>
 
+        <script>
+            var success_text = {{ successful_text[0] | tojson }};
+            var stopwords = {{ successful_text[1] | tojson }};
+        </script>
         <script src="https://d3js.org/d3.v4.min.js"></script> 
         <script src="http://d3js.org/queue.v1.min.js"></script>
         <script src="http://d3js.org/topojson.v1.min.js"></script>

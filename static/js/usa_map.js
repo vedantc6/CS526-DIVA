@@ -7,7 +7,7 @@ var tip2 = d3.tip()
     var dataRow = countryById.get(d.properties.name);
     if (dataRow) {
         // console.log(dataRow);
-        return dataRow.states + ": " + dataRow.mortality;
+        return dataRow.states + ": " + dataRow.projects;
     } else {
         // console.log("no dataRow", d);
         return d.properties.name + ": No data.";
@@ -39,7 +39,7 @@ queue()
     .await(loaded);
 
 function typeAndSet(d) {
-    d.mortality = +d.mortality;
+    d.projects = +d.projects;
     d.successful = +d.successful;
     d.fail = +d.fail;
     // d.category = +d.category;
@@ -52,7 +52,7 @@ function getColor(d) {
     var dataRow = countryById.get(d.properties.name);
     if (dataRow) {
         // console.log(dataRow);
-        return colorScale(dataRow.mortality);
+        return colorScale(dataRow.projects);
     } else {
         // console.log("no dataRow", d);
         return "#ccc";
@@ -60,12 +60,12 @@ function getColor(d) {
 }
 
 
-function loaded(error, usa, mortality) {
+function loaded(error, usa, projects) {
 
     console.log(usa);
-    // console.log(mortality);
+    // console.log(projects);
 
-    colorScale.domain(d3.extent(mortality, function(d) {return d.mortality;}));
+    colorScale.domain(d3.extent(projects, function(d) {return d.projects;}));
 
     var states = topojson.feature(usa, usa.objects.units).features;
     // console.log(states);
@@ -112,7 +112,7 @@ function clicked(d){
     var dataRow = countryById.get(d.properties.name);
     // console.log(dataRow);
 
-    d3.select(".us-one").append("p").text(dataRow.mortality);
+    d3.select(".us-one").append("p").text(dataRow.projects);
     d3.select(".us-two").append("p").text(dataRow.successful);
     d3.select(".us-three").append("p").text(dataRow.fail);
     d3.select(".us-four").append("p").text(dataRow.category);
