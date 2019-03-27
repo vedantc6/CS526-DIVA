@@ -30,35 +30,18 @@ def get_category_treemap():
     # print(json.dumps(each_data))
     return json.dumps(each_data)
 
-# def predict_function(result):
-#     data = pd.read_csv('static/data/basic_features.csv')
-#     l = result['desc'].split(" ")
-#     s = ""
-#     child_category = result['parent_category']
-#     for val in l:
-#         if val not in stopwords:
-#             s += val
-#     if child_category == "filmvideo":
-#         child_category = "film & video"
-#     user_df = pd.DataFrame([[float(result['goal']), True, result['country'], child_category, result['parent_category'], 'failed', result['campaign_length'], len(s)]], columns=data.columns)
-#     data = data.append(user_df, ignore_index=True)
-#     data =  pd.get_dummies(data, columns=['loc_country','cat_name', 'cat_parent'])
-#     data.drop(columns=['state'], inplace=True)
-#     user_data = data.iloc[-1,:]
-#     user_data = np.array(user_data.values, dtype=np.float64).reshape(1,-1)
-#     loaded_model = joblib.load('static/data/lr_no_nlp.pkl')
-#     probs = loaded_model.predict_proba(user_data)
-#     return int(probs[0][1]*100)
-
 def predict_function(result):
     data = pd.read_csv('static/data/basic_features.csv')
     l = result['desc'].split(" ")
     s = ""
+    parent_category = result['parent_category']
     for val in l:
         if val not in stopwords:
             s += val
-
-    user_df = pd.DataFrame([[float(result['goal']), True, result['country'], result['category'], result['parent_category'], 'failed', result['campaign_length'], len(s)]], columns=data.columns)
+    if parent_category == "filmvideo":
+        parent_category = "film & video"
+    user_df = pd.DataFrame([[float(result['goal']), True, result['country'], result['category'], parent_category, 'failed', result['campaign_length'], len(s)]], columns=data.columns)
+    print(user_df)
     data = data.append(user_df, ignore_index=True)
     data =  pd.get_dummies(data, columns=['loc_country','cat_name', 'cat_parent'])
     data.drop(columns=['state'], inplace=True)
@@ -84,8 +67,8 @@ def insights():
     if request.method == 'POST':
         result = request.form
         print(result)
-        # value = predict_function(result)
-        return render_template('insights.html', data1=70)
+        value = predict_function(result)
+        return render_template('insights.html', data1=value)
     return render_template('insights.html', data1=0)
 
 @app.route('/statistics', methods = ['POST', 'GET'])

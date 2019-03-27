@@ -19,8 +19,8 @@ function d3BarChartBase() {
     barPadding = 1,
     misc = {ylabel: 7, xlabelH : 5, title:11};
 
-    console.log(width);
-    console.log(height);
+    // console.log(width);
+    // console.log(height);
     return {
         margin : margin,
         width : width,

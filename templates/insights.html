@@ -8,7 +8,7 @@
         <link href='../static/css/style.css' rel="stylesheet">
         <link rel="icon" href="data:;base64,iVBORwOKGO=" />
     </head>
-    <body style="font-family:Montserrat;color:#aaaaaa;">
+    <body onload="resetSelection()" style="font-family:Montserrat;color:#aaaaaa;">
         <script src="https://d3js.org/d3.v4.min.js"></script> 
         <script src="../static/js/continent_category.js"></script>
 
@@ -27,9 +27,9 @@
                         <form action = "{{ url_for('insights') }}" method = "POST">
                             <p>Project Name <input type = "text" name = "name" /></p>
                             <p>Project Description <input type = "text" name = "desc" /></p>
-                            <p>Goal Amount <input type = "text" name = "goal" /></p>
-                            <p>Campaign Length <input type ="text" name = "campaign_length" /></p>
-                            <label for="country">Country</label>     
+                            <p>Goal Amount (in $) <input type = "text" name = "goal" /></p>
+                            <p>Campaign Length (in days) <input type ="text" name = "campaign_length" /></p>
+                            <label for="country">Country of Origin</label>     
                                 <select id="country" name="country" class="form-control">
                                     <option value="AF">Afghanistan</option>
                                     <option value="AX">Åland Islands</option>
@@ -57,7 +57,7 @@
                                     <option value="BJ">Benin</option>
                                     <option value="BM">Bermuda</option>
                                     <option value="BT">Bhutan</option>
-                                    <option value="BO">Bolivia, Plurinational State of</option>
+                                    <option value="BO">Bolivia</option>
                                     <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
                                     <option value="BA">Bosnia and Herzegovina</option>
                                     <option value="BW">Botswana</option>
@@ -135,7 +135,7 @@
                                     <option value="IS">Iceland</option>
                                     <option value="IN">India</option>
                                     <option value="ID">Indonesia</option>
-                                    <option value="IR">Iran, Islamic Republic of</option>
+                                    <option value="IR">Iran</option>
                                     <option value="IQ">Iraq</option>
                                     <option value="IE">Ireland</option>
                                     <option value="IM">Isle of Man</option>
@@ -148,11 +148,11 @@
                                     <option value="KZ">Kazakhstan</option>
                                     <option value="KE">Kenya</option>
                                     <option value="KI">Kiribati</option>
-                                    <option value="KP">Korea, Democratic People's Republic of</option>
-                                    <option value="KR">Korea, Republic of</option>
+                                    <option value="KP">Korea, North</option>
+                                    <option value="KR">Korea, South</option>
                                     <option value="KW">Kuwait</option>
                                     <option value="KG">Kyrgyzstan</option>
-                                    <option value="LA">Lao People's Democratic Republic</option>
+                                    <option value="LA">Laos</option>
                                     <option value="LV">Latvia</option>
                                     <option value="LB">Lebanon</option>
                                     <option value="LS">Lesotho</option>
@@ -162,7 +162,7 @@
                                     <option value="LT">Lithuania</option>
                                     <option value="LU">Luxembourg</option>
                                     <option value="MO">Macao</option>
-                                    <option value="MK">Macedonia, the former Yugoslav Republic of</option>
+                                    <option value="MK">Macedonia</option>
                                     <option value="MG">Madagascar</option>
                                     <option value="MW">Malawi</option>
                                     <option value="MY">Malaysia</option>
@@ -175,7 +175,7 @@
                                     <option value="MU">Mauritius</option>
                                     <option value="YT">Mayotte</option>
                                     <option value="MX">Mexico</option>
-                                    <option value="FM">Micronesia, Federated States of</option>
+                                    <option value="FM">Micronesia</option>
                                     <option value="MD">Moldova, Republic of</option>
                                     <option value="MC">Monaco</option>
                                     <option value="MN">Mongolia</option>
@@ -200,7 +200,6 @@
                                     <option value="OM">Oman</option>
                                     <option value="PK">Pakistan</option>
                                     <option value="PW">Palau</option>
-                                    <option value="PS">Palestinian Territory, Occupied</option>
                                     <option value="PA">Panama</option>
                                     <option value="PG">Papua New Guinea</option>
                                     <option value="PY">Paraguay</option>
@@ -248,7 +247,7 @@
                                     <option value="SE">Sweden</option>
                                     <option value="CH">Switzerland</option>
                                     <option value="SY">Syrian Arab Republic</option>
-                                    <option value="TW">Taiwan, Province of China</option>
+                                    <option value="TW">Taiwan</option>
                                     <option value="TJ">Tajikistan</option>
                                     <option value="TZ">Tanzania, United Republic of</option>
                                     <option value="TH">Thailand</option>
@@ -281,42 +280,35 @@
                                     <option value="ZM">Zambia</option>
                                     <option value="ZW">Zimbabwe</option>
                                 </select><br>
-                            <label for="parent_category">Parent Category</label>     
-                                <select id="parent_category" name="parent_category" class="form-control"  onChange="category_select(this.value);">
-                                    <option value="film & video">film & video</option>
-                                    <option value="music">music</option>
-                                    <option value="technology">technology</option>
-                                    <option value="art">art</option>
-                                    <option value="publishing">publishing</option>
-                                    <option value="food">food</option>
-                                    <option value="games">games</option>
-                                    <option value="fashion">fashion</option>
-                                    <option value="design">design</option>
-                                    <option value="comics">comics</option>
-                                    <option value="photography">photography</option>
-                                    <option value="theater">theater</option>
-                                    <option value="crafts">crafts</option>
-                                    <option value="journalism">journalism</option>
-                                    <option value="dance">dance</option>
-                                </select>
-                            <p>Category <input type ="text" name = "category" /></p>
+                            <label for="parent_category">Parent Category</label>
+                            <select id="category" name="parent_category" class="form-control" onchange="makeSubmenu(this.value)">
+                                <option value="" disabled selected>Choose Category</option>
+                                <option value="filmvideo">Film & Video</option>
+                                    <option value="music">Music</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="art">Art</option>
+                                    <option value="publishing">Publishing</option>
+                                    <option value="food">Food</option>
+                                    <option value="games">Games</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="design">Design</option>
+                                    <option value="comics">Comics</option>
+                                    <option value="photography">Photography</option>
+                                    <option value="theater">Theater</option>
+                                    <option value="crafts">Crafts</option>
+                                    <option value="journalism">Journalism</option>
+                                    <option value="dance">Dance</option>
+                            </select>
+                            <br>
+                            <label for="sub_category">Sub Category</label>
+                            <select id="categorySelect" name="category" class="form-control" size="1" >
+                                <option value="" disabled selected>Choose Subcategory</option>
+                                <option></option>
+                            </select>
                             <p><input type = "submit" value = "submit"/></p>
                         </form>
                     </div>
-                    <div id="result-content">
-                        <!-- {% if data1 == 0 %}
-                        <p>{{ data1 }}</p>
-                        {% elif data1 != 9 %}
-                        <p>{{ data1 }}</p>
-                        {% endif %}                         -->
-
-                        <!-- <br>
-                        <div id="myProgress">
-                            <div id="myBar">0%</div>
-                        </div>
-                        <button onclick="var t = {{ data1 }}; move(t)">Show Prediction</button>  -->
-
-                    </div>
+                    <div id="result-content"></div>
                 </div>
             </div>
             
@@ -344,6 +336,43 @@
                 }
             }
         </script> -->
+        <script type="text/javascript">
+            var subcategory = {
+                crafts: ['Glass', 'Pottery', 'Knitting', 'Embroidery', 'Weaving', 'Printing', 'Woodworking', 'Crochet', 'Crafts', 'DIY', 'Candles', 'Stationery', 'Taxidermy', 'Quilts'],
+                games: ['Tabletop Games', 'Video Games', 'Playing Cards', 'Mobile Games', 'Gaming Hardware', 'Live Games', 'Puzzles', 'Games'],
+                publishing: ['Translations', 'Poetry', 'Young Adult', "Children's Books", 'Nonfiction', 'Art Books', 'Calendars', 'Periodicals', 'Literary Journals', 'Comedy', 'Academic', 'Zines', 'Radio & Podcasts', 'Fiction', 'Anthologies', 'Literary Spaces', 'Publishing', 'Letterpress'],
+                technology: ['Web', 'Gadgets', 'Software', 'DIY Electronics', 'Camera Equipment', 'Wearables', '3D Printing', 'Makerspaces', 'Hardware', 'Apps', 'Sound', 'Flight', 'Space Exploration', 'Fabrication Tools', 'Technology', 'Robots'],
+                comics: ['Comic Books', 'Webcomics', 'Anthologies', 'Graphic Novels', 'Comics', 'Events'],
+                fashion: ['Apparel', 'Accessories', 'Childrenswear', 'Jewelry', 'Ready-to-wear', 'Fashion', 'Footwear', 'Pet Fashion', 'Couture'],
+                music: ['Country & Folk', 'Indie Rock', 'Jazz', 'Metal', 'Hip-Hop', 'Classical Music', 'Pop', 'Blues', 'Kids', 'Faith', 'R&B', 'Latin', 'Rock', 'Music', 'Punk', 'World Music', 'Electronic Music', 'Comedy', 'Chiptune'],
+                journalism: ['Print', 'Journalism', 'Video', 'Web', 'Audio', 'Photo'],
+                filmvideo: ['Drama', 'Fantasy', 'Movie Theaters', 'Thrillers', 'Music Videos', 'Family', 'Narrative Film', 'Documentary', 'Festivals', 'Horror', 'Science Fiction', 'Television', 'Action', 'Film & Video', 'Webseries', 'Animation', 'Shorts', 'Experimental', 'Comedy', 'Romance'],
+                design: ['Graphic Design', 'Civic Design', 'Product Design', 'Design', 'Architecture', 'Interactive Design', 'Typography'],
+                art: ['Sculpture', 'Installations', 'Illustration', 'Art', 'Mixed Media', 'Painting', 'Performance Art', 'Digital Art', 'Ceramics', 'Textiles', 'Public Art', 'Video Art', 'Conceptual Art'],
+                food: ['Cookbooks', 'Farms', 'Restaurants', 'Food', 'Spaces', 'Small Batch', 'Food Trucks', 'Drinks', 'Bacon', "Farmer's Markets", 'Vegan', 'Events', 'Community Gardens'],
+                photography: ['People', 'Photography', 'Fine Art', 'Places', 'Nature', 'Photobooks', 'Animals'],
+                theater: ['Plays', 'Musical', 'Immersive', 'Experimental', 'Festivals', 'Spaces', 'Comedy', 'Theater'],
+                dance: ['Performances', 'Spaces', 'Residencies', 'Dance', 'Workshops']
+            }
+            function makeSubmenu(value) {
+            if(value.length==0) document.getElementById("categorySelect").innerHTML = "<option></option>";
+            else {
+            var citiesOptions = "";
+            for(categoryId in subcategory[value]) {
+            citiesOptions+="<option>"+subcategory[value][categoryId]+"</option>";
+            }
+            document.getElementById("categorySelect").innerHTML = citiesOptions;
+            }
+            }
+            function displaySelected() { var country = document.getElementById("category").value;
+            var city = document.getElementById("categorySelect").value;
+            alert(country+"\n"+city);
+            }
+            function resetSelection() {
+            document.getElementById("category").selectedIndex = 0;
+            document.getElementById("categorySelect").selectedIndex = 0;
+            }
+        </script>
         <script src="https://www.amcharts.com/lib/4/core.js"></script>
         <script src="https://www.amcharts.com/lib/4/charts.js"></script>
         <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
