@@ -45,73 +45,35 @@
         <script src="https://www.amcharts.com/lib/4/charts.js"></script>
         <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
         <script>
-            /**
- * ---------------------------------------
- * This demo was created using amCharts 4.
- * 
- * For more information visit:
- * https://www.amcharts.com/
- * 
- * Documentation is available at:
- * https://www.amcharts.com/docs/v4/
- * ---------------------------------------
- */
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
 
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-{% autoescape false %}
-    var data = {{data}};
-{% endautoescape %}
-
-                function processData(data) {
-                var treeData = [];
-
-                // var smallBrands = { name: "Other", children: [] };
-
-                for (var brand in data) {
-                    var brandData = { name: brand, children: [] }
-                    var brandTotal = 0;
-                    for (var model in data[brand]) {
-                        brandTotal += data[brand][model];
-                    }
-
-                    for (var model in data[brand]) {
-                        // do not add very small
-                        if (data[brand][model] > 1) {
-                            brandData.children.push({ name: model, count: data[brand][model] });
-                        }
-                    }
-
-                    // add to small brands if total number less than
-                    // if (brandTotal > 100000) {
-                        treeData.push(brandData);
-                    // }
-                    // else {
-                    //     smallBrands.children.push(brandData)
-                    // }
-
-                }
-                // treeData.push(smallBrands);
-                return treeData;
-            }
+            // {% autoescape false %}
+            //     var data = {{data}};
+            // {% endautoescape %}
 
             // create chart
             var chart = am4core.create("treemap", am4charts.TreeMap);
+            // chart.data = [{'name': 'crafts', 'children': [{'name': 'Glass', 'value': 254623}, {'name': 'Pottery', 'value': 531912}, {'name': 'Knitting', 'value': 947425}, {'name': 'Embroidery', 'value': 125409}, {'name': 'Weaving', 'value': 677424}, {'name': 'Printing', 'value': 285732}, {'name': 'Woodworking', 'value': 2118785}, {'name': 'Crochet', 'value': 53063}, {'name': 'Crafts', 'value': 8121189}, {'name': 'DIY', 'value': 1556364}, {'name': 'Candles', 'value': 317940}, {'name': 'Stationery', 'value': 520750}, {'name': 'Taxidermy', 'value': 38109}, {'name': 'Quilts', 'value': 195449}], 'color': '#e377c2'}, {'name': 'games', 'children': [{'name': 'Tabletop Games', 'value': 275268931}, {'name': 'Video Games', 'value': 198881318}, {'name': 'Playing Cards', 'value': 22978331}, {'name': 'Mobile Games', 'value': 6331309}, {'name': 'Gaming Hardware', 'value': 21104986}, {'name': 'Live Games', 'value': 2830013}, {'name': 'Puzzles', 'value': 1733517}, {'name': 'Games', 'value': 10779647}], 'color': '#d62728'}, {'name': 'publishing', 'children': [{'name': 'Translations', 'value': 432930}, {'name': 'Poetry', 'value': 2068924}, {'name': 'Young Adult', 'value': 1202966}, {'name': "Children's Books", 'value': 24577225}, {'name': 'Nonfiction', 'value': 24409629}, {'name': 'Art Books', 'value': 27976986}, {'name': 'Calendars', 'value': 1674499}, {'name': 'Periodicals', 'value': 7764298}, {'name': 'Literary Journals', 'value': 1087337}, {'name': 'Comedy', 'value': 674878}, {'name': 'Academic', 'value': 2740116}, {'name': 'Zines', 'value': 1193625}, {'name': 'Radio & Podcasts', 'value': 6469484}, {'name': 'Fiction', 'value': 12133307}, {'name': 'Anthologies', 'value': 3016327}, {'name': 'Literary Spaces', 'value': 1044761}, {'name': 'Publishing', 'value': 6395973}, {'name': 'Letterpress', 'value': 353750}], 'color': '#2ca02c'}, {'name': 'technology', 'children': [{'name': 'Web', 'value': 11002875}, {'name': 'Gadgets', 'value': 112967402}, {'name': 'Software', 'value': 12200888}, {'name': 'DIY Electronics', 'value': 23598106}, {'name': 'Camera Equipment', 'value': 46834508}, {'name': 'Wearables', 'value': 76864926}, {'name': '3D Printing', 'value': 49066199}, {'name': 'Makerspaces', 'value': 1532554}, {'name': 'Hardware', 'value': 165351966}, {'name': 'Apps', 'value': 10095568}, {'name': 'Sound', 'value': 48357856}, {'name': 'Flight', 'value': 12649727}, {'name': 'Space Exploration', 'value': 11286531}, {'name': 'Fabrication Tools', 'value': 13060181}, {'name': 'Technology', 'value': 74863590}, {'name': 'Robots', 'value': 22888513}], 'color': '#ff7f0e'}, {'name': 'comics', 'children': [{'name': 'Comic Books', 'value': 14005929}, {'name': 'Webcomics', 'value': 11109527}, {'name': 'Anthologies', 'value': 6833492}, {'name': 'Graphic Novels', 'value': 19560374}, {'name': 'Comics', 'value': 27947885}, {'name': 'Events', 'value': 606345}], 'color': '#c5b0d5'}, {'name': 'fashion', 'children': [{'name': 'Apparel', 'value': 49697483}, {'name': 'Accessories', 'value': 24955460}, {'name': 'Childrenswear', 'value': 2198872}, {'name': 'Jewelry', 'value': 4063024}, {'name': 'Ready-to-wear', 'value': 3308799}, {'name': 'Fashion', 'value': 32908169}, {'name': 'Footwear', 'value': 20854170}, {'name': 'Pet Fashion', 'value': 472376}, {'name': 'Couture', 'value': 429274}], 'color': '#ff9896'}, {'name': 'music', 'children': [{'name': 'Country & Folk', 'value': 22798827}, {'name': 'Indie Rock', 'value': 22036940}, {'name': 'Jazz', 'value': 9295257}, {'name': 'Metal', 'value': 1918088}, {'name': 'Hip-Hop', 'value': 4818722}, {'name': 'Classical Music', 'value': 12920632}, {'name': 'Pop', 'value': 13770840}, {'name': 'Blues', 'value': 1259117}, {'name': 'Kids', 'value': 1454717}, {'name': 'Faith', 'value': 5677422}, {'name': 'R&B', 'value': 1137227}, {'name': 'Latin', 'value': 510004}, {'name': 'Rock', 'value': 22736181}, {'name': 'Music', 'value': 10047560}, {'name': 'Punk', 'value': 643686}, {'name': 'World Music', 'value': 9479703}, {'name': 'Electronic Music', 'value': 6220793}, {'name': 'Comedy', 'value': 190278}, {'name': 'Chiptune', 'value': 628129}], 'color': '#1f77b4'}, {'name': 'journalism', 'children': [{'name': 'Print', 'value': 2361542}, {'name': 'Journalism', 'value': 6553142}, {'name': 'Video', 'value': 722036}, {'name': 'Web', 'value': 4018858}, {'name': 'Audio', 'value': 1679324}, {'name': 'Photo', 'value': 310982}], 'color': '#f7b6d2'}, {'name': 'film & video', 'children': [{'name': 'Drama', 'value': 10685337}, {'name': 'Fantasy', 'value': 3686521}, {'name': 'Movie Theaters', 'value': 5859929}, {'name': 'Thrillers', 'value': 3783302}, {'name': 'Music Videos', 'value': 1550130}, {'name': 'Family', 'value': 1791665}, {'name': 'Narrative Film', 'value': 46706640}, {'name': 'Documentary', 'value': 92141199}, {'name': 'Festivals', 'value': 1416731}, {'name': 'Horror', 'value': 7572903}, {'name': 'Science Fiction', 'value': 6769828}, {'name': 'Television', 'value': 9628685}, {'name': 'Action', 'value': 3379967}, {'name': 'Film & Video', 'value': 5246024}, {'name': 'Webseries', 'value': 21723328}, {'name': 'Animation', 'value': 27020266}, {'name': 'Shorts', 'value': 26146746}, {'name': 'Experimental', 'value': 1023992}, {'name': 'Comedy', 'value': 14380181}, {'name': 'Romance', 'value': 750421}], 'color': '#aec7e8'}, {'name': 'design', 'children': [{'name': 'Graphic Design', 'value': 12612042}, {'name': 'Civic Design', 'value': 3703015}, {'name': 'Product Design', 'value': 286856297}, {'name': 'Design', 'value': 23091932}, {'name': 'Architecture', 'value': 5360376}, {'name': 'Interactive Design', 'value': 1957347}, {'name': 'Typography', 'value': 2360712}], 'color': '#9467bd'}, {'name': 'art', 'children': [{'name': 'Sculpture', 'value': 8721533}, {'name': 'Installations', 'value': 2505049}, {'name': 'Illustration', 'value': 14018683}, {'name': 'Art', 'value': 8760269}, {'name': 'Mixed Media', 'value': 8129184}, {'name': 'Painting', 'value': 7469014}, {'name': 'Performance Art', 'value': 5426996}, {'name': 'Digital Art', 'value': 3066826}, {'name': 'Ceramics', 'value': 1707652}, {'name': 'Textiles', 'value': 814100}, {'name': 'Public Art', 'value': 15961446}, {'name': 'Video Art', 'value': 594170}, {'name': 'Conceptual Art', 'value': 1848028}], 'color': '#ffbb78'}, {'name': 'food', 'children': [{'name': 'Cookbooks', 'value': 3857685}, {'name': 'Farms', 'value': 5164983}, {'name': 'Restaurants', 'value': 16215609}, {'name': 'Food', 'value': 52062583}, {'name': 'Spaces', 'value': 3667562}, {'name': 'Small Batch', 'value': 8348957}, {'name': 'Food Trucks', 'value': 3752120}, {'name': 'Drinks', 'value': 17623471}, {'name': 'Bacon', 'value': 357904}, {'name': "Farmer's Markets", 'value': 845679}, {'name': 'Vegan', 'value': 4432226}, {'name': 'Events', 'value': 1103617}, {'name': 'Community Gardens', 'value': 520194}], 'color': '#98df8a'}, {'name': 'photography', 'children': [{'name': 'People', 'value': 2432380}, {'name': 'Photography', 'value': 18460921}, {'name': 'Fine Art', 'value': 2367979}, {'name': 'Places', 'value': 794725}, {'name': 'Nature', 'value': 1053290}, {'name': 'Photobooks', 'value': 13882997}, {'name': 'Animals', 'value': 1034449}], 'color': '#8c564b'}, {'name': 'theater', 'children': [{'name': 'Plays', 'value': 4845020}, {'name': 'Musical', 'value': 5117951}, {'name': 'Immersive', 'value': 1958021}, {'name': 'Experimental', 'value': 1393650}, {'name': 'Festivals', 'value': 1683175}, {'name': 'Spaces', 'value': 2334365}, {'name': 'Comedy', 'value': 792225}, {'name': 'Theater', 'value': 13225585}], 'color': '#c49c94'}, {'name': 'dance', 'children': [{'name': 'Performances', 'value': 3999219}, {'name': 'Spaces', 'value': 913840}, {'name': 'Residencies', 'value': 251437}, {'name': 'Dance', 'value': 7927510}, {'name': 'Workshops', 'value': 298000}], 'color': '#7f7f7f'}];
+            // Set up data source
+            chart.dataSource.url = "/category_treemap";
+            
             chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
+            chart.padding(0, 0, 0, 0);
             // only one level visible initially
             chart.maxLevels = 1;
             // define data fields
-            chart.dataFields.value = "count";
+            chart.dataFields.value = "value";
             chart.dataFields.name = "name";
             chart.dataFields.children = "children";
-            chart.homeText = "Parent-Child Category";
+            chart.dataFields.color = "color";
+            chart.homeText = "Parent-Child Categories";
 
             // enable navigation
             chart.navigationBar = new am4charts.NavigationBar();
-
+            chart.legend = new am4charts.Legend();
             // level 0 series template
             var level0SeriesTemplate = chart.seriesTemplates.create("0");
             level0SeriesTemplate.strokeWidth = 2;
@@ -120,40 +82,57 @@ am4core.useTheme(am4themes_animated);
             level0SeriesTemplate.bulletsContainer.hiddenState.properties.opacity = 1;
             level0SeriesTemplate.bulletsContainer.hiddenState.properties.visible = true;
             // create hover state
-            var columnTemplate = level0SeriesTemplate.columns.template;
-            var hoverState = columnTemplate.states.create("hover");
+            var hoverState = level0SeriesTemplate.columns.template.states.create("hover");
 
             // darken
-            hoverState.adapter.add("fill", function (fill, target) {
-                if (fill instanceof am4core.Color) {
-                    return am4core.color(am4core.colors.brighten(fill.rgb, -0.2));
-                }
-                return fill;
-            })
+            hoverState.adapter.add("fill", (fill, target) => {
+            return am4core.color(am4core.colors.brighten(fill.rgb, -0.2));
+            });
+
+            // // add logo
+            // var image = level0SeriesTemplate.columns.template.createChild(
+            //   am4core.Image
+            // );
+            // image.opacity = 0.15;
+            // image.align = "center";
+            // image.valign = "middle";
+            // image.width = am4core.percent(80);
+            // image.height = am4core.percent(80);
+
+            // // add adapter for href to load correct image
+            // image.adapter.add("href", (href, target) => {
+            //   var dataItem = target.parent.dataItem;
+            //   if (dataItem) {
+            //     return (
+            //       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-160/" +
+            //       dataItem.treeMapDataItem.name.toLowerCase() +
+            //       ".png"
+            //     );
+            //   }
+            // });
 
             // level1 series template
             var level1SeriesTemplate = chart.seriesTemplates.create("1");
-            level1SeriesTemplate.columns.template.fillOpacity = 0;
-
-            var bullet1 = level1SeriesTemplate.bullets.push(new am4charts.LabelBullet());
+            var bullet1 = level1SeriesTemplate.bullets.push(
+            new am4charts.LabelBullet()
+            );
             bullet1.locationX = 0.5;
             bullet1.locationY = 0.5;
             bullet1.label.text = "{name}";
             bullet1.label.fill = am4core.color("#ffffff");
+            level1SeriesTemplate.columns.template.fillOpacity = 0;
 
             // level2 series template
             var level2SeriesTemplate = chart.seriesTemplates.create("2");
-            level2SeriesTemplate.columns.template.fillOpacity = 0;
-
-            var bullet2 = level2SeriesTemplate.bullets.push(new am4charts.LabelBullet());
+            var bullet2 = level2SeriesTemplate.bullets.push(
+            new am4charts.LabelBullet()
+            );
             bullet2.locationX = 0.5;
             bullet2.locationY = 0.5;
             bullet2.label.text = "{name}";
             bullet2.label.fill = am4core.color("#ffffff");
-
-            chart.data = processData(data);
-            
         </script>
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>

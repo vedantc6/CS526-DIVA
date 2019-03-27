@@ -13,23 +13,6 @@ app.config.from_object(Config)
 data2 = pd.read_csv("static/data/KickStarter2018.csv")
 stopwords = ["video,dance,journalism,crafts,theater,photography,comics,design,fashion,games,food,publishing,art,technology,film,music,category,kickstart,kickstarter,pledge,goal,now,should,don't,just,will,can,very,too,than,so,same,own,only,not,nor,no,such,some,other,most,more,few,each,both,any,all,how,why,where,when,there,here,once,then,further,again,under,over,off,on,out,in,down,up,from,to,below,above,after,before,during,through,into,between,against,about,with,for,by,at,of,while,until,as,because,or,if,but,and,the,an,a,doing,did,does,do,having,had,has,have,being,been,be,were,was,are,is,am,those,these,that,this,whom,who,which,what,themselves,theirs,their,them,they,itself,its,it,herself,hers,her,she,himself,his,him,he,yourselves,yourself,yours,your,you,ourselves,ours,our,we,myself,my,me,i"]
 
-def get_category_treemap():
-    # category_map_data = []
-    each_data = {}
-    for value in data2.cat_parent.unique():
-        if value not in each_data:
-            each_data[value] = {}
-        filtered = data2[data2.cat_parent == value]
-        category = filtered.cat_name.unique()
-        for cat in category:
-            filtered_cat = filtered[filtered.cat_name == cat]
-            filtered_cat["converted_pledged_amount"] = filtered_cat["converted_pledged_amount"].apply(int)
-            percentage_success = filtered_cat["converted_pledged_amount"].sum()
-            if cat not in each_data[value]:
-                each_data[value][cat] = int(percentage_success)
-    # print(json.dumps(each_data))
-    return json.dumps(each_data)
-
 def predict_function(result):
     data = pd.read_csv('static/data/basic_features.csv')
     l = result['desc'].split(" ")
@@ -73,8 +56,7 @@ def insights():
 
 @app.route('/statistics', methods = ['POST', 'GET'])
 def statistics():
-    data = get_category_treemap()
-    return render_template('statistics.html', data=data)
+    return render_template('statistics.html')
 
 @app.route('/spotlight')
 def spotlight():
@@ -277,5 +259,35 @@ def continent_category_data():
             
     return jsonify(continent_data)
 
+@app.route('/category_treemap')
+def get_category_treemap():
+    category_map_data = []
+    colors = ["#e377c2", "#d62728", "#2ca02c", "#ff7f0e", "#c5b0d5", "#ff9896", "#1f77b4", "#f7b6d2", "#aec7e8", "#9467bd", "#ffbb78", "#98df8a", "#8c564b", "#c49c94", "#7f7f7f"]
+    i = 0
+    for value in data2.cat_parent.unique():
+        each_data = {}
+        if value not in each_data:
+            each_data["name"] = value
+            each_data["children"] = []
+            each_data["color"] = colors[i]
+            
+        filtered = data2[data2.cat_parent == value]
+        category = filtered.cat_name.unique()
+        for cat in category:
+            child_dict = {}
+            filtered_cat = filtered[filtered.cat_name == cat]
+            filtered_cat["converted_pledged_amount"] = filtered_cat["converted_pledged_amount"].apply(int)
+            percentage_success = filtered_cat["converted_pledged_amount"].sum()
+            if "name" not in child_dict:
+                child_dict["name"] = cat
+                child_dict["value"]= int(percentage_success)
+                
+            each_data["children"].append(child_dict)
+                
+        category_map_data.append(each_data)
+        i += 1
+            
+    return jsonify(category_map_data)
+    
 if __name__ == '__main__':
    app.run(debug = True)
