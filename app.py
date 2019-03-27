@@ -29,9 +29,10 @@ def insights():
         return render_template('insights.html', data1=result['goal'])
     return render_template('insights.html', data1=0)
 
-@app.route('/statistics')
+@app.route('/statistics', methods = ['POST', 'GET'])
 def statistics():
-    return render_template('statistics.html')
+    data = get_category_treemap()
+    return render_template('statistics.html', data=data)
 
 @app.route('/spotlight')
 def spotlight():
@@ -239,6 +240,23 @@ def continent_category_data():
             continent_data.append(each_data)
             
     return jsonify(continent_data)
+
+def get_category_treemap():
+    # category_map_data = []
+    each_data = {}
+    for value in data2.cat_parent.unique():
+        if value not in each_data:
+            each_data[value] = {}
+        filtered = data2[data2.cat_parent == value]
+        category = filtered.cat_name.unique()
+        for cat in category:
+            filtered_cat = filtered[filtered.cat_name == cat]
+            filtered_cat["converted_pledged_amount"] = filtered_cat["converted_pledged_amount"].apply(int)
+            percentage_success = filtered_cat["converted_pledged_amount"].sum()
+            if cat not in each_data[value]:
+                each_data[value][cat] = int(percentage_success)
+    # print(json.dumps(each_data))
+    return json.dumps(each_data)
 
 if __name__ == '__main__':
    app.run(debug = True)
