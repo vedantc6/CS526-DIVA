@@ -340,7 +340,7 @@ hr.style1 {
 }
 
 .box {
-    background-color: #444;
+    /* background-color: #444; */
     color: #fff;
     border-radius: 5px;
     padding: 10px;
@@ -349,28 +349,34 @@ hr.style1 {
 }
 
 .a {
+    background-color: #4CAF50;
     grid-column: col 1 / span 2;
     grid-row: row ;
 }
 .b {
+    background-color: #C6426E;
     grid-column: col 3 / span 3 ;
     grid-row: row ;
 }
 .c {
+    background-color: #FFA500;
     grid-column: col 1 / span 3;
     grid-row: row 2 ;
 }
 .d {
+    background-color: #6F257F;
     grid-column: col 4 / span  2 ;
     grid-row: row 2 ;
 }
 
 .e {
+    background-color: #d9480f;
     grid-column: col 1 / span 2;
     grid-row: row 3;
 }
 
 .f {
+    background-color: #af841f;
     grid-column: col 3 / span 3;
     grid-row: row 3;
 }
@@ -381,9 +387,9 @@ hr.style1 {
     /* background-color: #444; */
 }
 
-.bar {
+/* .bar {
     fill: #6F257F;
-}
+} */
 .axis path,
 .axis line {
     fill: none;
@@ -481,7 +487,12 @@ hr.style1 {
     color: white;
   }
 
-  /* FOR LINE CHART */
+/* FOR LINE CHART */
+#chartdiv {
+    width: 100%;
+    height: 500px;
+}
+
 .axis {
     font: 10px sans-serif;
 }
@@ -590,7 +601,7 @@ opacity: .6;
 .stat-content {
     width: 100%;
     height: 400px;
-    border: 2px solid green;
+    /* border: 2px solid green; */
     display: inline-block;
 }
 
@@ -600,7 +611,7 @@ opacity: .6;
     width:48%;
     height: 96%;
     font-size: 12px;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     float: left;
 }
 
@@ -610,14 +621,14 @@ opacity: .6;
     width: 48%;
     height: 96%;
     font-size: 12px;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     float: left;
 }
 
 #treemap {
     width: 100%;
     height: 400px;
-    border: 2px solid green;
+    /* border: 2px solid green; */
     display: inline-block;
 }
 

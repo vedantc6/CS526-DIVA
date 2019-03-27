@@ -4,12 +4,69 @@ import pandas as pd
 import numpy as np
 import json
 from config import Config
+from sklearn.externals import joblib
+import pickle
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
 data2 = pd.read_csv("static/data/KickStarter2018.csv")
 stopwords = ["video,dance,journalism,crafts,theater,photography,comics,design,fashion,games,food,publishing,art,technology,film,music,category,kickstart,kickstarter,pledge,goal,now,should,don't,just,will,can,very,too,than,so,same,own,only,not,nor,no,such,some,other,most,more,few,each,both,any,all,how,why,where,when,there,here,once,then,further,again,under,over,off,on,out,in,down,up,from,to,below,above,after,before,during,through,into,between,against,about,with,for,by,at,of,while,until,as,because,or,if,but,and,the,an,a,doing,did,does,do,having,had,has,have,being,been,be,were,was,are,is,am,those,these,that,this,whom,who,which,what,themselves,theirs,their,them,they,itself,its,it,herself,hers,her,she,himself,his,him,he,yourselves,yourself,yours,your,you,ourselves,ours,our,we,myself,my,me,i"]
+
+def get_category_treemap():
+    # category_map_data = []
+    each_data = {}
+    for value in data2.cat_parent.unique():
+        if value not in each_data:
+            each_data[value] = {}
+        filtered = data2[data2.cat_parent == value]
+        category = filtered.cat_name.unique()
+        for cat in category:
+            filtered_cat = filtered[filtered.cat_name == cat]
+            filtered_cat["converted_pledged_amount"] = filtered_cat["converted_pledged_amount"].apply(int)
+            percentage_success = filtered_cat["converted_pledged_amount"].sum()
+            if cat not in each_data[value]:
+                each_data[value][cat] = int(percentage_success)
+    # print(json.dumps(each_data))
+    return json.dumps(each_data)
+
+# def predict_function(result):
+#     data = pd.read_csv('static/data/basic_features.csv')
+#     l = result['desc'].split(" ")
+#     s = ""
+#     child_category = result['parent_category']
+#     for val in l:
+#         if val not in stopwords:
+#             s += val
+#     if child_category == "filmvideo":
+#         child_category = "film & video"
+#     user_df = pd.DataFrame([[float(result['goal']), True, result['country'], child_category, result['parent_category'], 'failed', result['campaign_length'], len(s)]], columns=data.columns)
+#     data = data.append(user_df, ignore_index=True)
+#     data =  pd.get_dummies(data, columns=['loc_country','cat_name', 'cat_parent'])
+#     data.drop(columns=['state'], inplace=True)
+#     user_data = data.iloc[-1,:]
+#     user_data = np.array(user_data.values, dtype=np.float64).reshape(1,-1)
+#     loaded_model = joblib.load('static/data/lr_no_nlp.pkl')
+#     probs = loaded_model.predict_proba(user_data)
+#     return int(probs[0][1]*100)
+
+def predict_function(result):
+    data = pd.read_csv('static/data/basic_features.csv')
+    l = result['desc'].split(" ")
+    s = ""
+    for val in l:
+        if val not in stopwords:
+            s += val
+
+    user_df = pd.DataFrame([[float(result['goal']), True, result['country'], result['category'], result['parent_category'], 'failed', result['campaign_length'], len(s)]], columns=data.columns)
+    data = data.append(user_df, ignore_index=True)
+    data =  pd.get_dummies(data, columns=['loc_country','cat_name', 'cat_parent'])
+    data.drop(columns=['state'], inplace=True)
+    user_data = data.iloc[-1,:]
+    user_data = np.array(user_data.values, dtype=np.float64).reshape(1,-1)
+    loaded_model = joblib.load('static/data/lr_no_nlp.pkl')
+    probs = loaded_model.predict_proba(user_data)
+    return int(probs[0][1]*100)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -26,7 +83,9 @@ def maps():
 def insights():
     if request.method == 'POST':
         result = request.form
-        return render_template('insights.html', data1=result['goal'])
+        print(result)
+        # value = predict_function(result)
+        return render_template('insights.html', data1=70)
     return render_template('insights.html', data1=0)
 
 @app.route('/statistics', methods = ['POST', 'GET'])
@@ -152,6 +211,21 @@ def get_barchart_data():
 
 @app.route('/line_chart_data')
 def line_chart_data():
+    # by_year = data2.year.value_counts()
+    # line_chart_data = []
+    # num_month = {"1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun", "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
+
+    # for index, item in zip(by_year.index, by_year.values):
+    #     year_data = data2[data2.year == index]
+    #     by_month = year_data.month.value_counts()
+    #     for m_index, m_item in zip(by_month.index, by_month.values):
+    #         print(year_data.year.unique(), m_index, m_item)
+    #         each_data = {}
+    #         each_data["year"] = str(index)
+    #         each_data["month"] = str(m_index)
+    #         each_data["value"] = int(m_item)
+        
+    #         line_chart_data.append(each_data)
     line_chart_data = [
         {"year" : "2005", "value": 771900},
         {"year" : "2006", "value": 771500},
@@ -165,28 +239,7 @@ def line_chart_data():
         {"year" : "2014", "value": 779200},
         {"year" : "2015", "value": 782300}
     ]
-    # by_year = data2.year.value_counts()
-    # by_month = data2.month.value_counts()
-    # line_chart_data = []
-    # num_month = {"1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun", "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
 
-    # for index, item in zip(by_year.index, by_year.values):
-    #     each_data = {}
-    #     each_data['key'] = str(index)
-    #     each_data['value'] = int(round(item, 2))
-    #     each_data['type'] = 'year'
-        
-    #     line_chart_data.append(each_data)
-        
-    # for index, item in zip(by_month.index, by_month.values):
-    #     each_data = {}
-    #     if str(index) in num_month:
-    #         each_data['key'] = num_month[str(index)]
-    #     each_data['value'] = int(round(item, 2))
-    #     each_data['type'] = 'month'
-        
-    #     line_chart_data.append(each_data)
-    
     return jsonify(line_chart_data)
 
 @app.route('/spotlight_data')
@@ -240,23 +293,6 @@ def continent_category_data():
             continent_data.append(each_data)
             
     return jsonify(continent_data)
-
-def get_category_treemap():
-    # category_map_data = []
-    each_data = {}
-    for value in data2.cat_parent.unique():
-        if value not in each_data:
-            each_data[value] = {}
-        filtered = data2[data2.cat_parent == value]
-        category = filtered.cat_name.unique()
-        for cat in category:
-            filtered_cat = filtered[filtered.cat_name == cat]
-            filtered_cat["converted_pledged_amount"] = filtered_cat["converted_pledged_amount"].apply(int)
-            percentage_success = filtered_cat["converted_pledged_amount"].sum()
-            if cat not in each_data[value]:
-                each_data[value][cat] = int(percentage_success)
-    # print(json.dumps(each_data))
-    return json.dumps(each_data)
 
 if __name__ == '__main__':
    app.run(debug = True)

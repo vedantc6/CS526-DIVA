@@ -1,4 +1,4 @@
-function bar(continent_name){
+function bar(continent_name, colorval){
     var parent = document.getElementById("barchart");
     var child = document.querySelector("#barchart > g");
     if (child !== null){
@@ -43,6 +43,7 @@ function bar(continent_name){
         .attr("height", y.bandwidth())
         .attr("y", function(d) { return y(d.area); })
         .attr("width", function(d) { return x(d.value); })
+        .attr("fill", colorval)
         .on("mousemove", function(d){
             tooltip
             .style("left", d3.event.pageX - 50 + "px")

@@ -24,7 +24,8 @@
                     <div id="line-chart">
                         <div>Line Chart <span style="float: right"><a id="year" href="/">Year</a><a id="month" href="/"> Month</a></span></div>
                         <br>
-                        <svg id="line-chart-svg" width="550" height="300"></svg>
+                        <div id="chartdiv"></div>
+                        <!-- <svg id="line-chart-svg" width="550" height="300"></svg> -->
                     </div>
                     <div id="successful-words">
                         <div>Successful words</div>
@@ -38,12 +39,12 @@
                         <div>Continent wise categories</div>
                         <br>
                         <div class="wrapper">
-                            <div class="box a" onclick="bar('North America');">North America</div>
-                            <div class="box b" onclick="bar('South America');">South America</div>
-                            <div class="box c" onclick="bar('Europe');">Europe</div>
-                            <div class="box d" onclick="bar('Asia');">Asia</div>
-                            <div class="box e" onclick="bar('Africa');">Africa</div>
-                            <div class="box f" onclick="bar('Oceania');">Oceania</div>
+                            <div class="box a" onclick="bar('North America', '#4CAF50');">North America</div>
+                            <div class="box b" onclick="bar('South America', '#C6426E');">South America</div>
+                            <div class="box c" onclick="bar('Europe', '#FFA500');">Europe</div>
+                            <div class="box d" onclick="bar('Asia', '#6F257F');">Asia</div>
+                            <div class="box e" onclick="bar('Africa', '#d9480f');">Africa</div>
+                            <div class="box f" onclick="bar('Oceania', '#af841f');">Oceania</div>
                         </div>
                         <svg id="barchart" width="550" height="300"></svg>
                     </div>
@@ -70,13 +71,17 @@
         <script src="{{ url_for('static', filename='js/d3-tip.js') }}"></script>
         <script src="{{ url_for('static', filename='js/jenks.js') }}"></script>
         <script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+        <script src="https://www.amcharts.com/lib/4/core.js"></script>
+        <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+        <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
         <script>
             zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
             ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];
         </script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
         <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
-        <script src="{{ url_for('static', filename='js/line_chart.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/line_chart_slide.js') }}"></script>
         <script src="{{ url_for('static', filename='js/wordcloud.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.js"></script>
         <script lang='babel' type='text/babel' src="{{ url_for('static', filename='js/world_map.js') }}"></script>
