@@ -22,7 +22,7 @@
                 <hr>
                 <div class="graph-content">
                     <div id="line-chart">
-                        <div>Line Chart <span style="float: right"><a id="year" href="/">Year</a><a id="month" href="/"> Month</a></span></div>
+                        <div>Line Chart</div>
                         <br>
                         <div id="chartdiv"></div>
                         <!-- <svg id="line-chart-svg" width="550" height="300"></svg> -->
@@ -64,6 +64,7 @@
             var success_text = {{ successful_text[0] | tojson }};
             var stopwords = {{ successful_text[1] | tojson }};
         </script>
+        
         <script src="https://d3js.org/d3.v4.min.js"></script> 
         <script src="http://d3js.org/queue.v1.min.js"></script>
         <script src="http://d3js.org/topojson.v1.min.js"></script>

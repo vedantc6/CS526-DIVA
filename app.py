@@ -176,36 +176,37 @@ def get_barchart_data():
 
 @app.route('/line_chart_data')
 def line_chart_data():
-    # by_year = data2.year.value_counts()
-    # line_chart_data = []
-    # num_month = {"1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun", "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
+    new_data = pd.read_csv("static/data/line_chart_ma.csv")
+    new_data['MA'] = new_data['value'].rolling(window=5).mean()
+    new_data = new_data.dropna(axis=0)
+    
+    data = []
 
-    # for index, item in zip(by_year.index, by_year.values):
-    #     year_data = data2[data2.year == index]
-    #     by_month = year_data.month.value_counts()
-    #     for m_index, m_item in zip(by_month.index, by_month.values):
-    #         print(year_data.year.unique(), m_index, m_item)
-    #         each_data = {}
-    #         each_data["year"] = str(index)
-    #         each_data["month"] = str(m_index)
-    #         each_data["value"] = int(m_item)
-        
-    #         line_chart_data.append(each_data)
-    line_chart_data = [
-        {"year" : "2005", "value": 771900},
-        {"year" : "2006", "value": 771500},
-        {"year" : "2007", "value": 770500},
-        {"year" : "2008", "value": 770400},
-        {"year" : "2009", "value": 771000},
-        {"year" : "2010", "value": 772400},
-        {"year" : "2011", "value": 774100},
-        {"year" : "2012", "value": 776700},
-        {"year" : "2013", "value": 777100},
-        {"year" : "2014", "value": 779200},
-        {"year" : "2015", "value": 782300}
-    ]
+    for i in range(len(new_data)):
+        val = new_data["MA"].iloc[i]
+        date = new_data["date"].iloc[i]
+        each_data = {}
+        each_data["date"] = date
+        each_data["value"] = int(val)
 
-    return jsonify(line_chart_data)
+        data.append(each_data)
+
+    return jsonify(data)
+    # line_chart_data = [
+    #     {"year" : "2005", "value": 771900},
+    #     {"year" : "2006", "value": 771500},
+    #     {"year" : "2007", "value": 770500},
+    #     {"year" : "2008", "value": 770400},
+    #     {"year" : "2009", "value": 771000},
+    #     {"year" : "2010", "value": 772400},
+    #     {"year" : "2011", "value": 774100},
+    #     {"year" : "2012", "value": 776700},
+    #     {"year" : "2013", "value": 777100},
+    #     {"year" : "2014", "value": 779200},
+    #     {"year" : "2015", "value": 782300}
+    # ]
+
+    # return jsonify(line_chart_data)
 
 @app.route('/spotlight_data')
 def get_spotlight_data():
@@ -288,6 +289,6 @@ def get_category_treemap():
         i += 1
             
     return jsonify(category_map_data)
-    
+
 if __name__ == '__main__':
    app.run(debug = True)
