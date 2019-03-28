@@ -9,7 +9,7 @@
         <link rel="icon" href="data:;base64,iVBORwOKGO=" />
         <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     </head>
-    <body style="font-family:Montserrat;color:#aaaaaa;">
+    <body onload="wordcloud_func('success')"style="font-family:Montserrat;color:#aaaaaa;">
         <div class="header">
             <a href="/" class="logo">Crowdsourcing Analytics and Visualization</a>
         </div>
@@ -22,21 +22,22 @@
                 <hr>
                 <div class="graph-content">
                     <div id="line-chart">
-                        <div>Line Chart</div>
+                        <div class="content-text">Line Chart</div>
                         <br>
                         <div id="chartdiv"></div>
                         <!-- <svg id="line-chart-svg" width="550" height="300"></svg> -->
                     </div>
                     <div id="successful-words">
-                        <div>Successful words</div>
+                        <div class="content-text">Word Cloud<span style="float: right"><button class="wc" id="success" style="margin: 2px" onclick="wordcloud_func('success')">Successful</button><button class="wc" id="fail" style="margin: 2px" onclick="wordcloud_func('failed')">Failed</button></span></div>
+                        <div id="successful-words-cloud"></div>
                         <br>
                     </div>
                     <div id="world-map">
-                        <div>World Map</div>
+                        <div class="content-text">World Map</div>
                         <svg id="world-map-svg" width="550" height="300"></svg>
                     </div>
                     <div id="continent-categories">
-                        <div>Continent wise categories</div>
+                        <div class="content-text">Continent wise categories</div>
                         <br>
                         <div class="wrapper">
                             <div class="box a" onclick="bar('North America', '#4CAF50');">North America</div>
@@ -59,11 +60,6 @@
                 <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
             </nav>    
         </div>
-
-        <script>
-            var success_text = {{ successful_text[0] | tojson }};
-            var stopwords = {{ successful_text[1] | tojson }};
-        </script>
         
         <script src="https://d3js.org/d3.v4.min.js"></script> 
         <script src="http://d3js.org/queue.v1.min.js"></script>
@@ -71,22 +67,65 @@
         <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
         <script src="{{ url_for('static', filename='js/d3-tip.js') }}"></script>
         <script src="{{ url_for('static', filename='js/jenks.js') }}"></script>
-        <script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+        
+        <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
         <script src="https://www.amcharts.com/lib/4/core.js"></script>
         <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
         <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
         <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-        <script>
-            zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-            ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];
-        </script>
+        
         <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
         <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
         <script src="{{ url_for('static', filename='js/line_chart_slide.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/wordcloud.js') }}"></script>
+        <!-- <script src="{{ url_for('static', filename='js/wordcloud.js') }}"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.js"></script>
         <script lang='babel' type='text/babel' src="{{ url_for('static', filename='js/world_map.js') }}"></script>
         <script src="{{ url_for('static', filename='js/continent_category.js') }}"></script>
 
+        <script>
+            // {% autoescape false %}
+            //     var wordcloud_data = {{wordcloud_data}};
+            // {% endautoescape %}
+            // console.log(wordcloud_data);
+            // Themes begin
+            data1_wc = [{'tag': 'perfect', 'count': '877'}, {'tag': 'original', 'count': '2829'}, {'tag': 'graphic', 'count': '909'}, {'tag': 'comics', 'count': '853'}, {'tag': 'looking', 'count': '1148'}, {'tag': 'support', 'count': '2719'}, {'tag': 'street', 'count': '515'}, {'tag': 'record', 'count': '3529'}, {'tag': 'future', 'count': '909'}, {'tag': 'created', 'count': '1224'}, {'tag': 'collection', 'count': '2313'}, {'tag': 'experience', 'count': '1390'}, {'tag': 'visual', 'count': '620'}, {'tag': 'friends', 'count': '1605'}, {'tag': 'creating', 'count': '1701'}, {'tag': 'unique', 'count': '2296'}, {'tag': 'awesome', 'count': '754'}, {'tag': 'series', 'count': '3498'}, {'tag': 'adventures', 'count': '635'}, {'tag': 'featuring', 'count': '2462'}, {'tag': 'feature', 'count': '1096'}, {'tag': 'anthology', 'count': '664'}, {'tag': 'funding', 'count': '869'}, {'tag': 'classic', 'count': '1156'}, {'tag': 'american', 'count': '1259'}, {'tag': 'designs', 'count': '657'}, {'tag': 'recording', 'count': '2471'}, {'tag': 'finish', 'count': '865'}, {'tag': 'tabletop', 'count': '551'}, {'tag': 'working', 'count': '903'}, {'tag': 'everything', 'count': '639'}, {'tag': 'length', 'count': '1124'}, {'tag': 'create', 'count': '2968'}, {'tag': 'printed', 'count': '951'}, {'tag': 'artists', 'count': '1866'}, {'tag': 'simple', 'count': '860'}, {'tag': 'launch', 'count': '683'}, {'tag': 'online', 'count': '742'}, {'tag': 'monsters', 'count': '516'}, {'tag': 'explore', 'count': '670'}, {'tag': 'follows', 'count': '557'}, {'tag': 'inspired', 'count': '2496'}, {'tag': 'contemporary', 'count': '627'}, {'tag': 'culture', 'count': '946'}, {'tag': 'favorite', 'count': '775'}, {'tag': 'raising', 'count': '984'}, {'tag': 'community', 'count': '2220'}, {'tag': 'things', 'count': '785'}, {'tag': 'special', 'count': '706'}, {'tag': 'digital', 'count': '822'}, {'tag': 'powerful', 'count': '564'}, {'tag': 'affordable', 'count': '583'}, {'tag': 'recorded', 'count': '828'}, {'tag': 'country', 'count': '685'}, {'tag': 'together', 'count': '1567'}, {'tag': 'change', 'count': '915'}, {'tag': 'building', 'count': '871'}, {'tag': 'history', 'count': '1217'}, {'tag': 'theater', 'count': '748'}, {'tag': 'making', 'count': '2361'}, {'tag': 'little', 'count': '1378'}, {'tag': 'stories', 'count': '2155'}, {'tag': 'different', 'count': '790'}, {'tag': 'complete', 'count': '931'}, {'tag': 'photography', 'count': '1061'}, {'tag': 'images', 'count': '511'}, {'tag': 'fantasy', 'count': '1628'}, {'tag': 'musical', 'count': '1333'}, {'tag': 'design', 'count': '1874'}, {'tag': 'people', 'count': '2818'}, {'tag': 'reality', 'count': '862'}, {'tag': 'innovative', 'count': '525'}, {'tag': 'limited', 'count': '1207'}, {'tag': 'edition', 'count': '1466'}, {'tag': 'playing', 'count': '1403'}, {'tag': 'living', 'count': '895'}, {'tag': 'interactive', 'count': '651'}, {'tag': 'writing', 'count': '721'}, {'tag': 'studio', 'count': '2046'}, {'tag': 'prints', 'count': '693'}, {'tag': 'designed', 'count': '1972'}, {'tag': 'project', 'count': '4251'}, {'tag': 'international', 'count': '575'}, {'tag': 'single', 'count': '585'}, {'tag': 'everyone', 'count': '882'}, {'tag': 'production', 'count': '1486'}, {'tag': 'children', 'count': '2153'}, {'tag': 'exciting', 'count': '639'}, {'tag': 'festival', 'count': '1506'}, {'tag': 'beautiful', 'count': '1733'}, {'tag': 'inspire', 'count': '500'}, {'tag': 'custom', 'count': '822'}, {'tag': 'bringing', 'count': '1006'}, {'tag': 'leather', 'count': '579'}, {'tag': 'enamel', 'count': '1634'}, {'tag': 'independent', 'count': '695'}, {'tag': 'business', 'count': '575'}, {'tag': 'social', 'count': '665'}, {'tag': 'science', 'count': '805'}, {'tag': 'illustrated', 'count': '943'}, {'tag': 'beauty', 'count': '576'}, {'tag': 'exhibition', 'count': '725'}, {'tag': 'modern', 'count': '1343'}, {'tag': 'release', 'count': '2005'}, {'tag': 'delicious', 'count': '514'}, {'tag': 'family', 'count': '1682'}, {'tag': 'horror', 'count': '1010'}, {'tag': 'season', 'count': '687'}, {'tag': 'amazing', 'count': '921'}, {'tag': 'second', 'count': '1294'}, {'tag': 'creative', 'count': '992'}, {'tag': 'volume', 'count': '516'}, {'tag': 'artist', 'count': '1867'}, {'tag': 'traditional', 'count': '562'}, {'tag': 'student', 'count': '519'}, {'tag': 'illustrations', 'count': '562'}, {'tag': 'releasing', 'count': '585'}, {'tag': 'brings', 'count': '568'}, {'tag': 'quality', 'count': '1411'}, {'tag': 'please', 'count': '1009'}, {'tag': 'poetry', 'count': '654'}, {'tag': 'natural', 'count': '655'}, {'tag': 'professional', 'count': '668'}, {'tag': 'travel', 'count': '911'}, {'tag': 'coffee', 'count': '945'}, {'tag': 'around', 'count': '1345'}, {'tag': 'performance', 'count': '1182'}, {'tag': 'journey', 'count': '1797'}, {'tag': 'students', 'count': '1040'}, {'tag': 'school', 'count': '1258'}, {'tag': 'exploring', 'count': '905'}, {'tag': 'summer', 'count': '953'}, {'tag': 'organic', 'count': '586'}, {'tag': 'magazine', 'count': '859'}, {'tag': 'written', 'count': '1165'}, {'tag': 'coming', 'count': '848'}, {'tag': 'happen', 'count': '594'}, {'tag': 'without', 'count': '767'}, {'tag': 'produce', 'count': '949'}, {'tag': 'become', 'count': '797'}, {'tag': 'handmade', 'count': '723'}, {'tag': 'artwork', 'count': '616'}, {'tag': 'movement', 'count': '562'}, {'tag': 'america', 'count': '817'}, {'tag': 'available', 'count': '611'}, {'tag': 'dreams', 'count': '682'}, {'tag': 'london', 'count': '526'}, {'tag': 'system', 'count': '803'}, {'tag': 'adventure', 'count': '1870'}, {'tag': 'documentary', 'count': '1961'}, {'tag': 'mobile', 'count': '600'}, {'tag': 'company', 'count': '1065'}, {'tag': 'printing', 'count': '563'}, {'tag': 'paintings', 'count': '579'}, {'tag': 'control', 'count': '557'}, {'tag': 'trying', 'count': '817'}, {'tag': 'comedy', 'count': '1660'}, {'tag': 'produced', 'count': '651'}, {'tag': 'better', 'count': '799'}, {'tag': 'campaign', 'count': '671'}, {'tag': 'characters', 'count': '709'}, {'tag': 'players', 'count': '763'}, {'tag': 'fiction', 'count': '761'}, {'tag': 'kickstarter', 'count': '845'}, {'tag': 'personal', 'count': '663'}, {'tag': 'present', 'count': '530'}, {'tag': 'something', 'count': '536'}, {'tag': 'explores', 'count': '636'}, {'tag': 'finally', 'count': '661'}, {'tag': 'across', 'count': '761'}, {'tag': 'celebrating', 'count': '549'}, {'tag': 'public', 'count': '768'}, {'tag': 'musicians', 'count': '676'}, {'tag': 'theatre', 'count': '1226'}, {'tag': 'features', 'count': '610'}, {'tag': 'action', 'count': '830'}, {'tag': 'getting', 'count': '547'}, {'tag': 'follow', 'count': '531'}, {'tag': 'fashion', 'count': '780'}, {'tag': 'taking', 'count': '610'}, {'tag': 'chance', 'count': '502'}, {'tag': 'college', 'count': '525'}];
+            
+            data2_wc = [{'tag': 'handmade', 'count': '610'}, {'tag': 'special', 'count': '522'}, {'tag': 'series', 'count': '2208'}, {'tag': 'project', 'count': '3714'}, {'tag': 'simple', 'count': '936'}, {'tag': 'business', 'count': '1518'}, {'tag': 'social', 'count': '1452'}, {'tag': 'platform', 'count': '1168'}, {'tag': 'history', 'count': '689'}, {'tag': 'community', 'count': '2065'}, {'tag': 'network', 'count': '566'}, {'tag': 'create', 'count': '4021'}, {'tag': 'market', 'count': '506'}, {'tag': 'adventure', 'count': '610'}, {'tag': 'looking', 'count': '1603'}, {'tag': 'creating', 'count': '2435'}, {'tag': 'photos', 'count': '616'}, {'tag': 'beautiful', 'count': '1163'}, {'tag': 'perfect', 'count': '535'}, {'tag': 'website', 'count': '1207'}, {'tag': 'change', 'count': '826'}, {'tag': 'making', 'count': '1761'}, {'tag': 'personal', 'count': '610'}, {'tag': 'featuring', 'count': '872'}, {'tag': 'favorite', 'count': '538'}, {'tag': 'classic', 'count': '566'}, {'tag': 'unique', 'count': '2036'}, {'tag': 'complete', 'count': '537'}, {'tag': 'custom', 'count': '901'}, {'tag': 'affordable', 'count': '661'}, {'tag': 'system', 'count': '848'}, {'tag': 'company', 'count': '981'}, {'tag': 'modern', 'count': '697'}, {'tag': 'collection', 'count': '1001'}, {'tag': 'stories', 'count': '919'}, {'tag': 'poetry', 'count': '626'}, {'tag': 'mobile', 'count': '1515'}, {'tag': 'festival', 'count': '552'}, {'tag': 'people', 'count': '3946'}, {'tag': 'online', 'count': '1489'}, {'tag': 'around', 'count': '1499'}, {'tag': 'interactive', 'count': '603'}, {'tag': 'allows', 'count': '708'}, {'tag': 'products', 'count': '674'}, {'tag': 'amazing', 'count': '856'}, {'tag': 'friends', 'count': '1372'}, {'tag': 'family', 'count': '1540'}, {'tag': 'provide', 'count': '868'}, {'tag': 'connect', 'count': '500'}, {'tag': 'others', 'count': '602'}, {'tag': 'something', 'count': '655'}, {'tag': 'support', 'count': '1589'}, {'tag': 'device', 'count': '587'}, {'tag': 'organic', 'count': '787'}, {'tag': 'painting', 'count': '517'}, {'tag': 'become', 'count': '667'}, {'tag': 'raising', 'count': '557'}, {'tag': 'record', 'count': '1038'}, {'tag': 'artists', 'count': '1255'}, {'tag': 'release', 'count': '623'}, {'tag': 'creative', 'count': '833'}, {'tag': 'recording', 'count': '736'}, {'tag': 'studio', 'count': '1108'}, {'tag': 'without', 'count': '786'}, {'tag': 'journey', 'count': '918'}, {'tag': 'experience', 'count': '1351'}, {'tag': 'future', 'count': '754'}, {'tag': 'single', 'count': '597'}, {'tag': 'design', 'count': '1380'}, {'tag': 'together', 'count': '1212'}, {'tag': 'original', 'count': '1372'}, {'tag': 'students', 'count': '959'}, {'tag': 'everyone', 'count': '1163'}, {'tag': 'designed', 'count': '1489'}, {'tag': 'events', 'count': '745'}, {'tag': 'passion', 'count': '582'}, {'tag': 'little', 'count': '744'}, {'tag': 'inspired', 'count': '1051'}, {'tag': 'school', 'count': '884'}, {'tag': 'fashion', 'count': '870'}, {'tag': 'american', 'count': '736'}, {'tag': 'beauty', 'count': '590'}, {'tag': 'magazine', 'count': '908'}, {'tag': 'funding', 'count': '959'}, {'tag': 'living', 'count': '620'}, {'tag': 'videos', 'count': '637'}, {'tag': 'different', 'count': '856'}, {'tag': 'photography', 'count': '915'}, {'tag': 'promote', 'count': '514'}, {'tag': 'healthy', 'count': '651'}, {'tag': 'building', 'count': '815'}, {'tag': 'dedicated', 'count': '584'}, {'tag': 'action', 'count': '591'}, {'tag': 'digital', 'count': '883'}, {'tag': 'america', 'count': '529'}, {'tag': 'quality', 'count': '1445'}, {'tag': 'culture', 'count': '740'}, {'tag': 'bringing', 'count': '859'}, {'tag': 'playing', 'count': '655'}, {'tag': 'please', 'count': '691'}, {'tag': 'musical', 'count': '673'}, {'tag': 'android', 'count': '604'}, {'tag': 'things', 'count': '649'}, {'tag': 'delicious', 'count': '527'}, {'tag': 'service', 'count': '653'}, {'tag': 'awesome', 'count': '516'}, {'tag': 'travel', 'count': '777'}, {'tag': 'dreams', 'count': '539'}, {'tag': 'working', 'count': '843'}, {'tag': 'trying', 'count': '1191'}, {'tag': 'clothing', 'count': '614'}, {'tag': 'paintings', 'count': '580'}, {'tag': 'inspire', 'count': '506'}, {'tag': 'created', 'count': '1045'}, {'tag': 'artist', 'count': '1630'}, {'tag': 'public', 'count': '669'}, {'tag': 'production', 'count': '832'}, {'tag': 'everything', 'count': '564'}, {'tag': 'natural', 'count': '774'}, {'tag': 'designs', 'count': '547'}, {'tag': 'sports', 'count': '513'}, {'tag': 'produce', 'count': '859'}, {'tag': 'across', 'count': '532'}, {'tag': 'professional', 'count': '630'}, {'tag': 'independent', 'count': '554'}, {'tag': 'children', 'count': '1248'}, {'tag': 'feature', 'count': '620'}, {'tag': 'starting', 'count': '551'}, {'tag': 'restaurant', 'count': '669'}, {'tag': 'better', 'count': '926'}, {'tag': 'equipment', 'count': '591'}, {'tag': 'coming', 'count': '544'}, {'tag': 'comedy', 'count': '830'}, {'tag': 'horror', 'count': '559'}, {'tag': 'reality', 'count': '782'}, {'tag': 'coffee', 'count': '1121'}, {'tag': 'animated', 'count': '651'}];
+
+            function wordcloud_func(tid){
+                if (tid == "success"){
+                    var text_cloud = data1_wc;
+                }
+                else {
+                    var text_cloud = data2_wc;
+                }
+                am4core.useTheme(am4themes_animated);
+
+                var chart = am4core.create("successful-words-cloud", am4plugins_wordCloud.WordCloud);
+                chart.fontFamily = "Courier New";
+                var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
+                series.randomness = 0.1;
+                series.rotationThreshold = 0.5;
+                series.minCount = 100;
+                series.minWordLength = 5;
+
+                series.data = text_cloud;
+
+                series.dataFields.word = "tag";
+                series.dataFields.value = "count";
+
+                series.heatRules.push({
+                    "target": series.labels.template,
+                    "property": "fill",
+                    "min": am4core.color("#0000CC"),
+                    "max": am4core.color("#CC00CC"),
+                    "dataField": "value"
+                });
+
+                series.labels.template.tooltipText = "{word}:\n[bold]{value}[/]";
+
+            }
+        </script>
     </body>
 </html>

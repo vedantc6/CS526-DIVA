@@ -89,27 +89,28 @@
             return am4core.color(am4core.colors.brighten(fill.rgb, -0.2));
             });
 
-            // // add logo
-            // var image = level0SeriesTemplate.columns.template.createChild(
-            //   am4core.Image
-            // );
-            // image.opacity = 0.15;
-            // image.align = "center";
-            // image.valign = "middle";
-            // image.width = am4core.percent(80);
-            // image.height = am4core.percent(80);
+            // add logo
+            var image = level0SeriesTemplate.columns.template.createChild(
+              am4core.Image
+            );
+            image.opacity = 0.15;
+            image.align = "center";
+            image.valign = "middle";
+            image.width = am4core.percent(80);
+            image.height = am4core.percent(80);
 
-            // // add adapter for href to load correct image
-            // image.adapter.add("href", (href, target) => {
-            //   var dataItem = target.parent.dataItem;
-            //   if (dataItem) {
-            //     return (
-            //       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-160/" +
-            //       dataItem.treeMapDataItem.name.toLowerCase() +
-            //       ".png"
-            //     );
-            //   }
-            // });
+            // add adapter for href to load correct image
+            image.adapter.add("href", (href, target) => {
+              var dataItem = target.parent.dataItem;
+                if (dataItem) {
+                    if(dataItem.treeMapDataItem.name.toLowerCase() == "film & video"){
+                        return ("static/images/film.png");
+                    }
+                    else {
+                        return ("static/images/" + dataItem.treeMapDataItem.name.toLowerCase() + ".png");
+                    }
+                }
+            });
 
             // level1 series template
             var level1SeriesTemplate = chart.seriesTemplates.create("1");

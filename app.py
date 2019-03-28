@@ -6,12 +6,14 @@ import json
 from config import Config
 from sklearn.externals import joblib
 import pickle
+from nltk.tokenize import word_tokenize 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
 data2 = pd.read_csv("static/data/KickStarter2018.csv")
 stopwords = ["video,dance,journalism,crafts,theater,photography,comics,design,fashion,games,food,publishing,art,technology,film,music,category,kickstart,kickstarter,pledge,goal,now,should,don't,just,will,can,very,too,than,so,same,own,only,not,nor,no,such,some,other,most,more,few,each,both,any,all,how,why,where,when,there,here,once,then,further,again,under,over,off,on,out,in,down,up,from,to,below,above,after,before,during,through,into,between,against,about,with,for,by,at,of,while,until,as,because,or,if,but,and,the,an,a,doing,did,does,do,having,had,has,have,being,been,be,were,was,are,is,am,those,these,that,this,whom,who,which,what,themselves,theirs,their,them,they,itself,its,it,herself,hers,her,she,himself,his,him,he,yourselves,yourself,yours,your,you,ourselves,ours,our,we,myself,my,me,i"]
+stop_words = set(stopwords) 
 
 def predict_function(result):
     data = pd.read_csv('static/data/basic_features.csv')
@@ -36,10 +38,7 @@ def predict_function(result):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    temp = data2[data2.state == 'successful'].blurb
-    text = " ".join(temp.iloc[i] for i in range(len(temp)))
-
-    return render_template('main.html', successful_text=[text, stopwords])
+    return render_template('main.html')
 
 @app.route('/maps')
 def maps():

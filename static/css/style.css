@@ -16,7 +16,7 @@
 }
 
 .header a.logo {
-    font-size: 15px;
+    font-size: 30px;
     font-weight: bold;
     padding: 5px 1px 5px 1px;
 }
@@ -61,8 +61,11 @@
     width: 85%;                     /* No flex here, other cols take up remaining space */
     -moz-box-flex: 1;               /* Without this, Firefox 19- expands to widest paragraph, overrides width */
     /* background: linear-gradient(#141e30, #243b55); */
-    background: white;
+    background: lavender;
+    box-shadow: 3px 3px 5px 6px darkslategrey;
     height: 100%;
+    margin: 5px;
+    border-radius: 25px;
     /* position: relative; */
 }
 
@@ -81,7 +84,10 @@
     -ms-flex: 1;                    /* IE 10 */
     flex: 1;                        /* NEW, Spec - Opera 12.1, Firefox 20+ */
     
-    background: rgb(26, 16, 16);
+    background: rgb(8, 19, 43);
+    margin: 5px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px darkslategrey;
 }
 
 .main-content,
@@ -95,7 +101,7 @@
     color: rgb(243, 233, 233);
     text-align: center;
     text-decoration: none;
-    font-size: 15px; 
+    font-size: 25px; 
 }
 
 .main-nav a:hover {
@@ -108,10 +114,21 @@
     color: white;
 }
 
+.wc {
+    background-color: rgb(64, 119, 202);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.content-text {
+    color: rgb(27, 70, 134);
+}
 body {
     /* padding: 0.5em; */
     margin: 0;
-    background: linear-gradient(to right, #642B73 0%, #C6426E 100%);
+    background: linear-gradient(to right, #7F7FD5 0%, #86A8E7 50%, #AEEEEE 100%);
 }
 
 * {
@@ -128,6 +145,7 @@ h1, h2 {
 
 hr.style1 { 
     border-top: 1px solid #8c8b8b;
+    border-color: lavenderblush;
 } 
 
 .graph-content {
@@ -146,6 +164,7 @@ hr.style1 {
     /* background-color: #ffd8a8; */
     padding: 1em;
     color: #d9480f;
+    font-size: larger
 }
 
 #line-chart a {
@@ -337,7 +356,6 @@ hr.style1 {
     grid-gap: 2px;
     grid-template-columns: repeat(auto-fill, [col] auto ) ;
     grid-template-rows: repeat(auto-fill, [row] auto  );
-    background-color: #fff;
     color: #444;
 }
 
@@ -412,7 +430,12 @@ hr.style1 {
     padding: 14px;
     text-align: center;
 }
-
+/* WORDCLOUD */
+#successful-words-cloud {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
 /* FOR WORLD MAP */
 .names {
     fill: none;
@@ -670,6 +693,21 @@ input[type=text], select {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+input[type=submit] {
+    width: 100%;
+    background-color: rgb(64, 119, 202);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: rgb(40, 100, 150);
+  }
 
 #form-content {
     position:relative;
