@@ -25,11 +25,11 @@
                 <div class="insights-content">
                     <div id="form-content">
                         <form action = "{{ url_for('insights') }}" method = "POST">
-                            <p>Project Name <input type = "text" name = "name" /></p>
-                            <p>Project Description <input type = "text" name = "desc" /></p>
-                            <p>Goal Amount (in $) <input type = "text" name = "goal" /></p>
-                            <p>Campaign Length (in days) <input type ="text" name = "campaign_length" /></p>
-                            <label for="country">Country of Origin</label>     
+                            <p style="color:black">Project Name <input type = "text" name = "name" /></p>
+                            <p style="color:black">Project Description <input type = "text" name = "desc" /></p>
+                            <p style="color:black">Goal Amount (in $) <input type = "text" name = "goal" /></p>
+                            <p style="color:black">Campaign Length (in days) <input type ="text" name = "campaign_length" /></p>
+                            <label for="country" style="color:black">Country of Origin</label>     
                                 <select id="country" name="country" class="form-control">
                                     <option value="AF">Afghanistan</option>
                                     <option value="AX">Åland Islands</option>
@@ -280,9 +280,9 @@
                                     <option value="ZM">Zambia</option>
                                     <option value="ZW">Zimbabwe</option>
                                 </select><br>
-                            <label for="parent_category">Parent Category</label>
+                            <label for="parent_category" style="color:black">Parent Category</label>
                             <select id="category" name="parent_category" class="form-control" onchange="makeSubmenu(this.value)">
-                                <option value="" disabled selected>Choose Category</option>
+                                <option value="" disabled selected style="color:black">Choose Category</option>
                                 <option value="filmvideo">Film & Video</option>
                                     <option value="music">Music</option>
                                     <option value="technology">Technology</option>
@@ -300,7 +300,7 @@
                                     <option value="dance">Dance</option>
                             </select>
                             <br>
-                            <label for="sub_category">Sub Category</label>
+                            <label for="sub_category" style="color:black">Sub Category</label>
                             <select id="categorySelect" name="category" class="form-control" size="1" >
                                 <option value="" disabled selected>Choose Subcategory</option>
                                 <option></option>
@@ -314,8 +314,8 @@
             
             <nav class="main-nav">
                 <a href="/">Dashboard</a><br>
-                <a href="{{ url_for('maps') }}">Maps</a><br>
-                <a href="{{ url_for('insights') }}">Insights</a><br>
+                <a href="{{ url_for('maps') }}">US Maps</a><br>
+                <a href="{{ url_for('insights') }}">Prediction</a><br>
                 <a href="{{ url_for('statistics') }}">Statistics</a><br>
                 <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
             </nav>     

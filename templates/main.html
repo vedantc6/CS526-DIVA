@@ -22,22 +22,21 @@
                 <hr>
                 <div class="graph-content">
                     <div id="line-chart">
-                        <div class="content-text">Line Chart</div>
+                        <div class="content-text">Launched Kickstarter Projects by Day (from 2015)</div>
                         <br>
                         <div id="chartdiv"></div>
-                        <!-- <svg id="line-chart-svg" width="550" height="300"></svg> -->
                     </div>
                     <div id="successful-words">
-                        <div class="content-text">Word Cloud<span style="float: right"><button class="wc" id="success" style="margin: 2px" onclick="wordcloud_func('success')">Successful</button><button class="wc" id="fail" style="margin: 2px" onclick="wordcloud_func('failed')">Failed</button></span></div>
+                        <div class="content-text">Most frequent words used<span style="float: right"><button class="wc" id="success" style="margin: 2px" onclick="wordcloud_func('success')">Successful</button><button class="wc" id="fail" style="margin: 2px" onclick="wordcloud_func('failed')">Failed</button></span></div>
                         <div id="successful-words-cloud"></div>
                         <br>
                     </div>
                     <div id="world-map">
-                        <div class="content-text">World Map</div>
-                        <svg id="world-map-svg" width="550" height="300"></svg>
+                        <div class="content-text">Continent-level Projects</div>
+                        <div id="chorplethdiv"></div>
                     </div>
                     <div id="continent-categories">
-                        <div class="content-text">Continent wise categories</div>
+                        <div class="content-text">Category split between continents</div>
                         <br>
                         <div class="wrapper">
                             <div class="box a" onclick="bar('North America', '#4CAF50');">North America</div>
@@ -54,8 +53,8 @@
             
             <nav class="main-nav">
                 <a href="/">Dashboard</a><br>
-                <a href="{{ url_for('maps') }}">Maps</a><br>
-                <a href="{{ url_for('insights') }}">Insights</a><br>
+                <a href="{{ url_for('maps') }}">US Maps</a><br>
+                <a href="{{ url_for('insights') }}">Prediction</a><br>
                 <a href="{{ url_for('statistics') }}">Statistics</a><br>
                 <a href="{{ url_for('spotlight') }}">Spotlight</a><br>
             </nav>    
@@ -70,6 +69,10 @@
         
         <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
         <script src="https://www.amcharts.com/lib/4/core.js"></script>
+        <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+        <script src="https://www.amcharts.com/lib/4/geodata/worldLow.js"></script>
+        <script src="https://www.amcharts.com/lib/4/geodata/continentsLow.js"></script>
+        <!-- <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script> -->
         <script src="https://www.amcharts.com/lib/4/charts.js"></script>
         <script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
         <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
@@ -82,6 +85,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.js"></script>
         <script lang='babel' type='text/babel' src="{{ url_for('static', filename='js/world_map.js') }}"></script>
         <script src="{{ url_for('static', filename='js/continent_category.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/choropleth_map.js') }}"></script>
 
         <script>
             // {% autoescape false %}

@@ -129,14 +129,14 @@ d3.json("/spotlight_data", function(error, data) {
         .attr("class", "bio")
     ;
     bio
-        .append("h3")
+        .append("h2")
         .text(function(d,i){
         return d.name;
         })
     ;
     bio
         .filter(function(d){ return d.blurb != ""; })
-        .append("h4")
+        .append("h3")
         .text("Description:")
     ;
     bio

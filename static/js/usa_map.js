@@ -1,4 +1,4 @@
-var width = 600, height = 400, centered;
+var width = 700, height = 500, centered;
 
 var tip2 = d3.tip()
 .attr('class', 'd3-tip-us')

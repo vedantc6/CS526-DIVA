@@ -191,21 +191,6 @@ def line_chart_data():
         data.append(each_data)
 
     return jsonify(data)
-    # line_chart_data = [
-    #     {"year" : "2005", "value": 771900},
-    #     {"year" : "2006", "value": 771500},
-    #     {"year" : "2007", "value": 770500},
-    #     {"year" : "2008", "value": 770400},
-    #     {"year" : "2009", "value": 771000},
-    #     {"year" : "2010", "value": 772400},
-    #     {"year" : "2011", "value": 774100},
-    #     {"year" : "2012", "value": 776700},
-    #     {"year" : "2013", "value": 777100},
-    #     {"year" : "2014", "value": 779200},
-    #     {"year" : "2015", "value": 782300}
-    # ]
-
-    # return jsonify(line_chart_data)
 
 @app.route('/spotlight_data')
 def get_spotlight_data():
@@ -288,6 +273,35 @@ def get_category_treemap():
         i += 1
             
     return jsonify(category_map_data)
+
+@app.route('/continent_data')
+# @cross_origin()
+def continent_country_map():
+    with open('static/data/countries.csv', mode='r') as infile:
+        reader = csv.reader(infile)
+        next(reader)
+        my_dict = {}
+        for row in reader:
+    #         print(row)
+            if row[1] not in my_dict:
+                my_dict[row[1]] = [row[0], row[2]]
+                
+    continents = data2.continent.unique()
+    final_data = []
+    for cont in continents:           
+        filtered = data2[data2.continent == cont]
+        countries = filtered.loc_country.unique()
+        for coun in countries:
+            each_data = {}
+            if cont not in each_data:
+                each_data["continent"] = cont
+            if coun in my_dict:
+                each_data["country_id"] = coun
+                each_data['country'] = my_dict[coun][0] 
+                each_data["value"] = int(len(filtered[filtered.loc_country == coun]))
+                
+            final_data.append(each_data)
+    return jsonify(final_data)
 
 if __name__ == '__main__':
    app.run(debug = True)
