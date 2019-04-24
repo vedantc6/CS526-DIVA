@@ -20,22 +20,18 @@
                     <h1>Dashboard</h1>
                 </div>
                 <hr>
-                <div class="graph-content">
+                <!-- <div class="graph-content"> -->
                     <div id="line-chart">
                         <div class="content-text">Launched Kickstarter Projects by Day (from 2015)</div>
                         <br>
                         <div id="chartdiv"></div>
                     </div>
-                    <div id="successful-words">
-                        <div class="content-text">Most frequent words used<span style="float: right"><button class="wc" id="success" style="margin: 2px" onclick="wordcloud_func('success')">Successful</button><button class="wc" id="fail" style="margin: 2px" onclick="wordcloud_func('failed')">Failed</button></span></div>
-                        <div id="successful-words-cloud"></div>
-                        <br>
-                    </div>
-                    <div id="world-map">
+                <div style="display:flex">
+                    <div style="flex: 0 0 50%;" id="world-map">
                         <div class="content-text">Continent-level Projects</div>
                         <div id="chorplethdiv"></div>
                     </div>
-                    <div id="continent-categories">
+                    <div style="flex: 0 0 50%;" id="continent-categories">
                         <div class="content-text">Category split between continents</div>
                         <br>
                         <div class="wrapper">
@@ -49,6 +45,12 @@
                         <svg id="barchart" width="550" height="300"></svg>
                     </div>
                 </div>
+                    <div id="successful-words" style="height:300px">
+                        <div class="content-text">Most frequent words used<span style="float: right"><button class="wc" id="success" style="margin: 2px" onclick="wordcloud_func('success')">Successful</button><button class="wc" id="fail" style="margin: 2px" onclick="wordcloud_func('failed')">Failed</button></span></div>
+                        <div id="successful-words-cloud"></div>
+                        <!-- <br> -->
+                    </div>
+                <!-- </div> -->
             </div>
             
             <nav class="main-nav">
