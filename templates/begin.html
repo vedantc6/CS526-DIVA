@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>CSAV-Crowdsourcing Analysis and Visualization</title>
+        <meta name="description" content="Webpage for CS526 project">
+
+        <!--iOS -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/main.css">
+        <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+        <script src="{{ url_for('static', filename='js/vendor/modernizr-3.6.0.min.js') }}"></script>
+        <style type="text/css">
+
+        h1 {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+            margin: 0;
+            font-size: 14px;
+            font-family: 'Abel';;
+            font-size: 32px;
+            margin-bottom: 3px;
+        }
+        h2 {
+            font-family: 'Abel';
+            font-size: 32px;
+        }
+        p {
+            font-family: 'Abel';
+            font-size:18px;
+        }
+        .entry-header {
+            text-align: left;
+            margin: 0 auto 50px auto;
+            width: 80%;
+            max-width: 978px;
+            position: relative;
+            z-index: 10001;
+        }
+        #demo-content {
+            padding-top: 100px;
+        }
+        #main-stats {
+            /* border: 2px solid #001f3f; */
+            width: 100%;
+            height: 300px;
+        }
+        #total-pledge {
+            padding: 5px;
+            /* border: 2px solid #b6a615; */
+            width: 55%;
+            height: 45%;
+            float: left;
+            text-align: center;
+        }
+        #state-successful {
+            padding: 5px;
+            /* border: 2px solid #1cc224; */
+            width: 40%;
+            height: 45%;
+            float: right;
+            text-align: center;
+        }
+        #backers-count {
+            padding: 5px;
+            /* border: 2px solid #aa2281; */
+            width: 35%;
+            height: 45%;
+            float: left;
+            text-align: center;
+        }
+        #profile-id {
+            padding: 5px;
+            /* border: 2px solid #51af45; */
+            width: 30%;
+            height: 45%;
+            float: right;
+            text-align: center;
+        }
+        #state-fail {
+            padding: 5px;
+            /* border: 2px solid #51af45; */
+            width: 30%;
+            height: 45%;
+            float: right;
+            text-align: center;
+        }
+
+        #go-to-dashboard {
+            padding: 8px 20px;
+            text-decoration:none;
+            font-weight:bold;
+            border-radius:5px;
+            cursor:pointer;
+            background-color:#00D4FF;
+            color: #FFFFFF;
+        }
+
+        #go-to-dashboard:hover {
+            background-color:#00C4EB;
+            color: #FFFFFF;
+        }
+        </style>
+    </head>
+
+    <body class="demo">
+        <div id="demo-content">
+            <header class="entry-header">
+                <h1 class="entry-title"><center>CS526: Crowdsourcing Analysis and Visualization</center></h1>
+            </header>
+
+            <div id="loader-wrapper">
+                <div id="loader"></div>
+                <div class="loader-section section-left"></div>
+                <div class="loader-section section-right"></div>
+            </div>
+
+            <div id="content">
+                <p> Kickstarter is one of the most popular crowdsourcing platforms available right now on the Internet. 
+                    This project deep dives into the Kickstarter data, with the aim of analysing the data and drawing clean visualization and 
+                    interactivity for users. <br> Before we start with the dashboard, it is important how much value crowdsourcing holds, and for that
+                    we'll let the numbers do the talking.
+                </p>
+                <div id="main-stats">
+                    <div id="total-pledge">
+                        <h2 style="padding-left: 10px;">$2,664,579,612</h2><p style="padding-left: 10px;">Total Dollars pledged on Kickstarter projects</p>
+                    </div>
+                    <div id="state-successful">
+                        <h2 style="padding-left: 10px;">120,274</h2><p style="padding-left: 10px;">Succesfully funded projects</p>
+                    </div>
+                    <div id="backers-count">
+                        <h2 style="padding-left: 10px;">31, 470,780</h2><p style="padding-left: 10px;">Total number of backers (including repetitive)</p>
+                    </div>
+                    <div id="profile-id">
+                        <h2 style="padding-left: 10px;">190,808</h2><p style="padding-left: 10px;">Unique creators</p>
+                    </div>
+                    <div id="state-fail">
+                        <h2 style="padding-left: 10px;">88,720</h2><p style="padding-left: 10px;">Failed projects</p>
+                    </div>
+                </div>
+                <p style="font-size:10px">*Info based on subset data</p>
+                <br><br>
+                <center><a id="go-to-dashboard" href="{{ url_for('dashboard') }}">Go To Dashboard</a></center>
+            </div>
+            
+        </div>
+        <!-- /Demo content -->
+        <script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+
+    </body>
+</html>

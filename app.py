@@ -36,8 +36,12 @@ def predict_function(result):
     probs = loaded_model.predict_proba(user_data)
     return int(probs[0][1]*100)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return render_template('begin.html')
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
     return render_template('main.html')
 
 @app.route('/maps')
